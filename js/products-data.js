@@ -5,7 +5,7 @@ const products = [
     brand: "GN Fans",
     model: "GN-R56",
     category: "Ceiling Fan",
-    image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?auto=format&fit=crop&w=1200&q=85",
+    image: "./assets/ceiling fan 1.png",
     description:
       "A modern ceiling fan designed for everyday airflow in residential and commercial spaces.",
     specifications: {
