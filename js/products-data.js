@@ -5,7 +5,7 @@ const products = [
     brand: "GN Fans",
     model: "GN-R56",
     category: "Ceiling Fan",
-    image: "./assets/ceiling fan 1.png",
+    image: "../assets/ceiling fan 1.png",
     description:
       "A modern ceiling fan designed for everyday airflow in residential and commercial spaces.",
     specifications: {
@@ -38,7 +38,7 @@ const products = [
     brand: "GN Fans",
     model: "GN-C52",
     category: "Ceiling Fan",
-    image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85",
+    image: "../assets/exhaust fan.jpg",
     description:
       "A classic ceiling fan option focused on practical airflow and everyday use.",
     specifications: {
@@ -71,7 +71,7 @@ const products = [
     brand: "GFC Fans",
     model: "GFC-B56",
     category: "Ceiling Fan",
-    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=1200&q=85",
+    image: "../assets/pedestal fan 1.jpg",
     description:
       "A ceiling fan designed to combine practical airflow with a clean modern appearance.",
     specifications: {
@@ -104,7 +104,7 @@ const products = [
     brand: "GFC Fans",
     model: "GFC-P18",
     category: "Pedestal Fan",
-    image: "https://images.unsplash.com/photo-1618941716939-553df3c6c278?auto=format&fit=crop&w=1200&q=85",
+    image: "../assets/wall fan 1.jpg",
     description:
       "A portable pedestal fan designed for flexible airflow across different spaces.",
     specifications: {
@@ -137,7 +137,7 @@ const products = [
     brand: "Al Ahmed Fans",
     model: "AA-E10",
     category: "Exhaust Fan",
-    image: "https://images.unsplash.com/photo-1621905252507-b35492cc74b4?auto=format&fit=crop&w=1200&q=85",
+    image: "../assets/exhaust fan.jpg",
     description:
       "An exhaust fan designed for ventilation in enclosed areas and everyday spaces.",
     specifications: {
@@ -170,7 +170,7 @@ const products = [
     brand: "Yunas Fans",
     model: "YN-W16",
     category: "Wall Fan",
-    image: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?auto=format&fit=crop&w=1200&q=85",
+    image: "../assets/wall fan 1.jpg",
     description:
       "A wall-mounted fan designed to provide flexible airflow while saving floor space.",
     specifications: {
