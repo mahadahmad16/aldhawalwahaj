@@ -37,7 +37,6 @@
 
 }
 
-
 @media (max-width: 700px) {
 
   .page-hero {
@@ -2084,6 +2083,86 @@
     color: #111;
     text-decoration: none;
     border-bottom: 1px solid var(--line);
+  }
+
+}
+
+/* Brands page: use a purpose-built card layout once the desktop grid no longer fits.
+   Keeping the content in a full-width row prevents it from being squeezed into
+   the narrow number column on phones. */
+@media (max-width: 800px) {
+
+  .brand-detail-card,
+  .brand-detail-card.reverse {
+    min-height: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "logo number"
+      "image image"
+      "content content";
+  }
+
+  .brand-detail-card .brand-detail-logo,
+  .brand-detail-card.reverse .brand-detail-logo {
+    grid-area: logo;
+    order: initial;
+    min-height: 76px;
+    padding: 16px 20px;
+    align-items: flex-start;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .brand-detail-card .brand-number,
+  .brand-detail-card.reverse .brand-number {
+    grid-area: number;
+    order: initial;
+    align-items: center;
+    padding: 0 20px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+    border-left: 1px solid var(--line);
+  }
+
+  .brand-detail-card .brand-detail-image,
+  .brand-detail-card.reverse .brand-detail-image {
+    grid-area: image;
+    order: initial;
+    min-height: 0;
+    height: auto;
+    aspect-ratio: 16 / 9;
+  }
+
+  .brand-detail-card .brand-detail-content,
+  .brand-detail-card.reverse .brand-detail-content {
+    grid-area: content;
+    order: initial;
+    padding: 30px;
+  }
+
+}
+
+@media (max-width: 520px) {
+
+  .brand-detail-card .brand-detail-logo,
+  .brand-detail-card.reverse .brand-detail-logo {
+    min-height: 70px;
+    padding: 14px 16px;
+  }
+
+  .brand-detail-card .brand-number,
+  .brand-detail-card.reverse .brand-number {
+    padding: 0 16px;
+  }
+
+  .brand-detail-card .brand-detail-content,
+  .brand-detail-card.reverse .brand-detail-content {
+    padding: 26px 20px 28px;
+  }
+
+  .brand-detail-card .brand-detail-image,
+  .brand-detail-card.reverse .brand-detail-image {
+    aspect-ratio: 4 / 3;
   }
 
 }
