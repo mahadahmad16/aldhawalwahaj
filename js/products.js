@@ -22,6 +22,79 @@ const clearFilters =
 const resetProducts =
   document.getElementById("resetProducts");
 
+const productCatalogueStateKey =
+  "productCatalogueState";
+
+
+function saveCatalogueState(scrollY = window.scrollY) {
+
+  sessionStorage.setItem(
+    productCatalogueStateKey,
+    JSON.stringify({
+      search: productSearch.value,
+      categories: getSelectedValues(".category-filter"),
+      brands: getSelectedValues(".brand-filter"),
+      sort: sortProducts.value,
+      scrollY
+    })
+  );
+
+}
+
+
+function renderFilterOptions(containerId, className, values) {
+
+  const container =
+    document.getElementById(containerId);
+
+  values.forEach(value => {
+
+    const label =
+      document.createElement("label");
+
+    label.className =
+      "filter-option";
+
+    const input =
+      document.createElement("input");
+
+    input.type =
+      "checkbox";
+
+    input.className =
+      className;
+
+    input.value =
+      value;
+
+    const text =
+      document.createElement("span");
+
+    text.textContent =
+      value;
+
+    label.append(input, text);
+    container.appendChild(label);
+
+  });
+
+}
+
+
+renderFilterOptions(
+  "categoryFilterOptions",
+  "category-filter",
+  [...new Set(products.map(product => product.category))]
+    .sort((a, b) => a.localeCompare(b))
+);
+
+renderFilterOptions(
+  "brandFilterOptions",
+  "brand-filter",
+  [...new Set(products.map(product => product.brand))]
+    .sort((a, b) => a.localeCompare(b))
+);
+
 
 function getSelectedValues(selector) {
 
@@ -59,6 +132,8 @@ function renderProducts(productList) {
 
     const card =
       document.createElement("a");
+    const productDisplayName =
+      getProductDisplayName(product);
 
     card.href =
       `product-details.html?id=${product.id}`;
@@ -71,11 +146,14 @@ function renderProducts(productList) {
 
         <img
           src="${product.image}"
-          alt="${product.name}"
+          alt="${productDisplayName}"
         >
 
-        <span>
-          ${product.brand}
+        <span class="catalogue-brand-logo">
+          <img
+            src="${brandLogos[product.brand]}"
+            alt="${product.brand}"
+          >
         </span>
 
       </div>
@@ -87,11 +165,11 @@ function renderProducts(productList) {
         </small>
 
         <h3>
-          ${product.name}
+          ${productDisplayName}
         </h3>
 
         <p>
-          Model: ${product.model}
+          Model: ${product.model || "Not listed in catalog"}
         </p>
 
         <strong>
@@ -121,6 +199,7 @@ function applyFilters() {
   const selectedBrands =
     getSelectedValues(".brand-filter");
 
+  saveCatalogueState();
 
   let filtered =
     products.filter(product => {
@@ -133,9 +212,10 @@ function applyFilters() {
         product.brand
           .toLowerCase()
           .includes(search) ||
-        product.model
-          .toLowerCase()
-          .includes(search) ||
+        (product.model &&
+          product.model
+            .toLowerCase()
+            .includes(search)) ||
         product.category
           .toLowerCase()
           .includes(search);
@@ -313,28 +393,79 @@ const category =
 const brand =
   params.get("brand");
 
+let savedCatalogueState = null;
+const savedCatalogueStateJson =
+  sessionStorage.getItem(productCatalogueStateKey);
 
-if (category) {
+if (savedCatalogueStateJson) {
+
+  try {
+
+    savedCatalogueState =
+      JSON.parse(savedCatalogueStateJson);
+
+  } catch (error) {
+
+    console.error(
+      "Unable to restore the saved product catalogue filters.",
+      error
+    );
+
+  }
+
+}
+
+if (savedCatalogueState) {
+
+  productSearch.value =
+    savedCatalogueState.search || "";
+
+  sortProducts.value =
+    savedCatalogueState.sort || "default";
 
   document
     .querySelectorAll(".category-filter")
     .forEach(input => {
 
       input.checked =
-        input.value === category;
+        Array.isArray(savedCatalogueState.categories) &&
+        savedCatalogueState.categories.includes(input.value);
 
     });
-
-}
-
-
-if (brand) {
 
   document
     .querySelectorAll(".brand-filter")
     .forEach(input => {
 
       input.checked =
+        Array.isArray(savedCatalogueState.brands) &&
+        savedCatalogueState.brands.includes(input.value);
+
+    });
+
+}
+
+
+if (category || brand) {
+
+  document
+    .querySelectorAll(".category-filter")
+    .forEach(input => {
+
+      input.checked =
+        Boolean(category) &&
+        input.value
+          .toLowerCase()
+          .includes(category.toLowerCase());
+
+    });
+
+  document
+    .querySelectorAll(".brand-filter")
+    .forEach(input => {
+
+      input.checked =
+        Boolean(brand) &&
         input.value === brand;
 
     });
@@ -343,3 +474,31 @@ if (brand) {
 
 
 applyFilters();
+
+const navigationEntry =
+  performance.getEntriesByType("navigation")[0];
+
+if (
+  (
+    navigationEntry?.type === "back_forward" ||
+    document.referrer.includes("product-details.html")
+  ) &&
+  Number.isFinite(savedCatalogueState?.scrollY)
+) {
+
+  requestAnimationFrame(() => {
+    window.scrollTo(0, savedCatalogueState.scrollY);
+  });
+
+}
+
+productsGrid.addEventListener(
+  "click",
+  event => {
+
+    if (event.target.closest("a.catalogue-product-card")) {
+      saveCatalogueState(window.scrollY);
+    }
+
+  }
+);

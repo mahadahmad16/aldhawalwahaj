@@ -434,16 +434,12 @@
 
 @media (max-width: 1050px) {
 
-  .services-heading {
-    gap: 60px;
+  .service-overview {
+    gap: 45px;
   }
 
-  .services-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .service-card-large {
-    grid-row: span 2;
+  .service-overview-image {
+    height: 520px;
   }
 
   .service-category-grid {
@@ -463,26 +459,13 @@
     padding-bottom: 75px;
   }
 
-  .services-heading {
+  .service-overview {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 36px;
   }
 
-  .services-heading h2 {
-    font-size: 37px;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .service-card-large {
-    grid-row: auto;
-    min-height: 420px;
-  }
-
-  .service-card {
-    min-height: 300px;
+  .service-overview-image {
+    height: 440px;
   }
 
   .services-process {
@@ -548,16 +531,8 @@
 
 @media (max-width: 520px) {
 
-  .services-heading h2 {
-    font-size: 32px;
-  }
-
-  .service-card {
-    padding: 27px;
-  }
-
-  .service-card-large {
-    min-height: 390px;
+  .service-overview-image {
+    height: 330px;
   }
 
   .service-category-grid {
@@ -626,10 +601,6 @@
     gap: 55px;
   }
 
-  .contact-form-wrapper {
-    padding: 35px;
-  }
-
   .contact-location {
     padding: 65px 0;
   }
@@ -663,11 +634,7 @@
     font-size: 31px;
   }
 
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-form-wrapper {
+  .contact-call-panel {
     padding: 27px 22px;
   }
 
@@ -681,11 +648,6 @@
 
   .contact-map {
     min-height: 350px;
-  }
-
-  .map-label {
-    left: 18px;
-    bottom: 18px;
   }
 
   .contact-faq-heading h2 {
@@ -739,7 +701,7 @@
   }
 
   .product-detail-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 50px;
   }
 
@@ -1475,16 +1437,12 @@
 
 @media (max-width: 1050px) {
 
-  .services-heading {
-    gap: 60px;
+  .service-overview {
+    gap: 45px;
   }
 
-  .services-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
-  .service-card-large {
-    grid-row: span 2;
+  .service-overview-image {
+    height: 520px;
   }
 
   .service-category-grid {
@@ -1504,26 +1462,13 @@
     padding-bottom: 75px;
   }
 
-  .services-heading {
+  .service-overview {
     grid-template-columns: 1fr;
-    gap: 20px;
+    gap: 36px;
   }
 
-  .services-heading h2 {
-    font-size: 37px;
-  }
-
-  .services-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .service-card-large {
-    grid-row: auto;
-    min-height: 420px;
-  }
-
-  .service-card {
-    min-height: 300px;
+  .service-overview-image {
+    height: 440px;
   }
 
   .services-process {
@@ -1589,16 +1534,8 @@
 
 @media (max-width: 520px) {
 
-  .services-heading h2 {
-    font-size: 32px;
-  }
-
-  .service-card {
-    padding: 27px;
-  }
-
-  .service-card-large {
-    min-height: 390px;
+  .service-overview-image {
+    height: 330px;
   }
 
   .service-category-grid {
@@ -1667,10 +1604,6 @@
     gap: 55px;
   }
 
-  .contact-form-wrapper {
-    padding: 35px;
-  }
-
   .contact-location {
     padding: 65px 0;
   }
@@ -1704,11 +1637,7 @@
     font-size: 31px;
   }
 
-  .form-row {
-    grid-template-columns: 1fr;
-  }
-
-  .contact-form-wrapper {
+  .contact-call-panel {
     padding: 27px 22px;
   }
 
@@ -1722,11 +1651,6 @@
 
   .contact-map {
     min-height: 350px;
-  }
-
-  .map-label {
-    left: 18px;
-    bottom: 18px;
   }
 
   .contact-faq-heading h2 {

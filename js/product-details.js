@@ -4,8 +4,7 @@ const params =
   );
 
 const productId =
-  params.get("id") ||
-  "gn-royal-56";
+  params.get("id");
 
 
 const product =
@@ -13,27 +12,37 @@ const product =
     item => item.id === productId
   ) || products[0];
 
+const productDisplayName =
+  getProductDisplayName(product);
+
+const brandName =
+  product.brand.replace(/\s+Fans?$/i, "");
+
 
 document.title =
-  `${product.name} | Al Dhaw Al Wahaj`;
+  `${productDisplayName} | ${brandName} | Al Dhaw Al Wahaj`;
+
+
+const productBrandLogo =
+  document.getElementById("productBrandLogo");
+
+productBrandLogo.src =
+  brandLogos[product.brand];
+
+productBrandLogo.alt =
+  `${brandName} logo`;
 
 
 document.getElementById(
   "breadcrumbProduct"
 ).textContent =
-  product.name;
-
-
-document.getElementById(
-  "productBrand"
-).textContent =
-  product.brand;
+  productDisplayName;
 
 
 document.getElementById(
   "productName"
 ).textContent =
-  product.name;
+  productDisplayName;
 
 
 document.getElementById(
@@ -51,7 +60,7 @@ document.getElementById(
 document.getElementById(
   "productModel"
 ).textContent =
-  product.model;
+  product.model || "Not listed in catalog";
 
 
 document.getElementById(
@@ -93,33 +102,163 @@ const specifications =
     "specifications"
   );
 
+const specificationEntries =
+  Object.entries(
+    product.specifications
+  );
+
+const standardSpecificationKeys = [
+  "Volts",
+  "Watts",
+  "Hz",
+  "Rpm",
+  "Cfm"
+];
+
+const additionalSpecificationKeys =
+  specificationEntries
+    .map(([key]) => key)
+    .filter(
+      key =>
+        key !== "Size" &&
+        key !== "mm" &&
+        !standardSpecificationKeys.includes(key)
+    );
+
+const specificationKeys = [
+  ...standardSpecificationKeys.filter(
+    key => specificationEntries.some(([entryKey]) => entryKey === key)
+  ),
+  ...additionalSpecificationKeys
+];
+
+const numericOnlyValue = value => {
+  const textWithoutAnnotations =
+    String(value).replace(/\([^)]*\)/g, "");
+
+  const numericValues =
+    textWithoutAnnotations.match(
+      /\d+(?:\.\d+)?(?:\s*[-/]\s*\d+(?:\.\d+)?)*|—/g
+    );
+
+  return numericValues
+    ? numericValues.join(", ").replace(/\s*([-/])\s*/g, "$1")
+    : "—";
+};
+
+const replaceAndWithAmpersand = value =>
+  String(value).replace(/\band\b/gi, "&");
 
 specifications.innerHTML = "";
 
+if (!product.hasSpecifications) {
 
-Object.entries(
-  product.specifications
-).forEach(([key, value]) => {
+  const message =
+    document.createElement("p");
 
-  const item =
-    document.createElement("div");
+  message.className =
+    "specifications-empty";
 
-  item.className =
-    "specification-row";
+  message.textContent =
+    "No technical specifications are listed in the supplied catalog.";
 
-  item.innerHTML = `
-    <span>
-      ${key}
-    </span>
+  specifications.appendChild(message);
 
-    <strong>
-      ${value}
-    </strong>
-  `;
+}
 
-  specifications.appendChild(item);
+const specificationTableWrapper =
+  document.createElement("div");
+
+specificationTableWrapper.className =
+  "specifications-table-wrapper";
+
+const specificationTable =
+  document.createElement("table");
+
+specificationTable.className =
+  "specifications-table specifications-size-comparison";
+
+const tableHead =
+  specificationTable.createTHead().insertRow();
+
+const fallbackSizes =
+  (product.specifications.Size.match(/\d+(?:\.\d+)?/g) || [])
+    .map(size => `${size}"`);
+
+const sizeVariants =
+  product.sizeVariants ||
+  (fallbackSizes.length
+    ? fallbackSizes.map(size => ({ size }))
+    : null);
+
+const tableHeadings =
+  [
+    "Size",
+    ...(sizeVariants?.map(variant => variant.size) || ["Details"])
+  ].map(replaceAndWithAmpersand);
+
+tableHeadings.forEach(label => {
+
+  const heading =
+    document.createElement("th");
+
+  heading.scope =
+    "col";
+
+  heading.textContent =
+    label;
+
+  tableHead.appendChild(heading);
 
 });
+
+const tableBody =
+  specificationTable.createTBody();
+
+const tableRows =
+  specificationKeys.map(key => [
+    key,
+    ...(sizeVariants
+      ? sizeVariants.map(
+          variant => variant[key] || "—"
+        )
+      : [product.specifications[key] || "—"])
+  ]);
+
+tableRows.forEach(([key, ...values]) => {
+
+  const tableRow =
+    tableBody.insertRow();
+
+  const heading =
+    document.createElement("th");
+
+  heading.scope =
+    "row";
+
+  heading.textContent =
+    replaceAndWithAmpersand(key);
+
+  tableRow.appendChild(heading);
+
+  values.forEach(valueText => {
+
+    const value =
+      tableRow.insertCell();
+
+    value.textContent =
+      replaceAndWithAmpersand(
+        standardSpecificationKeys.includes(key)
+          ? numericOnlyValue(valueText)
+          : valueText
+      );
+
+  });
+
+});
+
+specificationTableWrapper.appendChild(specificationTable);
+specifications.appendChild(specificationTableWrapper);
 
 
 const features =
@@ -127,9 +266,15 @@ const features =
     "productFeatures"
   );
 
+const featureSection =
+  document.querySelector(
+    ".product-features-section"
+  );
 
 features.innerHTML = "";
 
+featureSection.hidden =
+  product.features.length === 0;
 
 product.features.forEach(
   (feature, index) => {
@@ -185,6 +330,8 @@ related.forEach(item => {
 
   const card =
     document.createElement("a");
+  const relatedProductDisplayName =
+    getProductDisplayName(item);
 
   card.href =
     `product-details.html?id=${item.id}`;
@@ -197,19 +344,22 @@ related.forEach(item => {
 
       <img
         src="${item.image}"
-        alt="${item.name}"
+        alt="${relatedProductDisplayName}"
       >
 
     </div>
 
     <div class="related-product-content">
 
-      <span>
-        ${item.brand}
+      <span class="related-product-brand">
+        <img
+          src="${brandLogos[item.brand]}"
+          alt="${item.brand}"
+        >
       </span>
 
       <h3>
-        ${item.name}
+        ${relatedProductDisplayName}
       </h3>
 
       <p>
