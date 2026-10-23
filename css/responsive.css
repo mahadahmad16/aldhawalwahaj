@@ -873,6 +873,9 @@
 
   .products-sidebar {
     position: static;
+    max-height: none;
+    overflow-y: visible;
+    scrollbar-gutter: auto;
   }
 
 }
@@ -1876,6 +1879,9 @@
 
   .products-sidebar {
     position: static;
+    max-height: none;
+    overflow-y: visible;
+    scrollbar-gutter: auto;
   }
 
 }
