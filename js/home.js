@@ -34,6 +34,11 @@ function showSlide(index) {
       "active",
       dotIndex === index
     );
+
+    dot.setAttribute(
+      "aria-current",
+      dotIndex === index ? "true" : "false"
+    );
   });
 
   currentSlide = index;

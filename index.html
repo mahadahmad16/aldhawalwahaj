@@ -113,19 +113,33 @@
 
       </div>
 
-      <div class="hero-slider-controls">
+      <div
+        class="hero-slider-controls"
+        role="group"
+        aria-label="Banner carousel controls"
+      >
 
-        <button class="hero-arrow" id="heroPrev">
+        <button
+          class="hero-arrow"
+          id="heroPrev"
+          type="button"
+          aria-label="Show previous banner"
+        >
           ←
         </button>
 
         <div class="hero-dots">
-          <button class="hero-dot active" data-slide="0"></button>
-          <button class="hero-dot" data-slide="1"></button>
-          <button class="hero-dot" data-slide="2"></button>
+          <button class="hero-dot active" data-slide="0" type="button" aria-label="Show banner 1"></button>
+          <button class="hero-dot" data-slide="1" type="button" aria-label="Show banner 2"></button>
+          <button class="hero-dot" data-slide="2" type="button" aria-label="Show banner 3"></button>
         </div>
 
-        <button class="hero-arrow" id="heroNext">
+        <button
+          class="hero-arrow"
+          id="heroNext"
+          type="button"
+          aria-label="Show next banner"
+        >
           →
         </button>
 

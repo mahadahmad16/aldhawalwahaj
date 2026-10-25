@@ -2216,51 +2216,88 @@ button{font:inherit}
 }
 
 .hero-slider-controls {
-  position: relative;
+  position: absolute;
+  right: clamp(16px, 3vw, 48px);
+  bottom: clamp(14px, 2vw, 32px);
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 18px;
-  min-height: 58px;
-  background: var(--dark);
+  gap: 10px;
+  padding: 6px;
+  background: rgba(16, 30, 32, .88);
+  border: 1px solid rgba(255, 255, 255, .2);
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, .2);
+  backdrop-filter: blur(10px);
 }
 
 .hero-arrow {
-  width: 44px;
-  height: 44px;
-  border: 1px solid rgba(255,255,255,.3);
+  width: 38px;
+  height: 38px;
+  padding: 0;
+  border: 1px solid rgba(255,255,255,.22);
   border-radius: 50%;
-  background: rgba(255,255,255,.08);
+  background: transparent;
   color: #fff;
   cursor: pointer;
-  transition: .25s ease;
+  font: 600 18px/1 Arial, sans-serif;
+  transition: background .2s ease, border-color .2s ease, transform .2s ease;
 }
 
-.hero-arrow:hover {
-  background: #fff;
-  color: #111;
+.hero-arrow:hover,
+.hero-arrow:focus-visible {
+  background: rgba(255,255,255,.16);
+  border-color: rgba(255,255,255,.7);
+  outline: 0;
+}
+
+.hero-arrow:active {
+  transform: scale(.94);
 }
 
 .hero-dots {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
 }
 
 .hero-dot {
-  width: 8px;
-  height: 8px;
+  width: 7px;
+  height: 7px;
   padding: 0;
   border: 0;
   border-radius: 50%;
   background: rgba(255,255,255,.4);
   cursor: pointer;
+  transition: width .2s ease, background .2s ease, transform .2s ease;
+}
+
+.hero-dot:hover,
+.hero-dot:focus-visible {
+  background: #fff;
+  outline: 2px solid rgba(255,255,255,.75);
+  outline-offset: 3px;
 }
 
 .hero-dot.active {
-  width: 25px;
+  width: 20px;
   border-radius: 10px;
   background: #fff;
+}
+
+@media (max-width: 600px) {
+  .hero-slider-controls {
+    right: 12px;
+    bottom: 12px;
+    gap: 8px;
+    padding: 5px;
+  }
+
+  .hero-arrow {
+    width: 36px;
+    height: 36px;
+  }
 }
 
 .home-intro-grid {
