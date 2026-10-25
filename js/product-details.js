@@ -102,12 +102,23 @@ const specifications =
     "specifications"
   );
 
+const fallbackSizes =
+  (product.specifications.Size.match(/\d+(?:\.\d+)?/g) || [])
+    .map(size => `${size}"`);
+
+const sizeVariants =
+  product.sizeVariants ||
+  (fallbackSizes.length
+    ? fallbackSizes.map(size => ({ size }))
+    : null);
+
 const specificationEntries =
   Object.entries(
     product.specifications
   );
 
 const standardSpecificationKeys = [
+  "mm",
   "Volts",
   "Watts",
   "Hz",
@@ -115,19 +126,35 @@ const standardSpecificationKeys = [
   "Cfm"
 ];
 
+const variantSpecificationKeys =
+  sizeVariants
+    ? sizeVariants.flatMap(variant => Object.keys(variant))
+    : [];
+
+const availableSpecificationKeys =
+  new Set([
+    ...specificationEntries.map(([key]) => key),
+    ...variantSpecificationKeys
+  ]);
+
 const additionalSpecificationKeys =
-  specificationEntries
-    .map(([key]) => key)
+  [...availableSpecificationKeys]
     .filter(
       key =>
         key !== "Size" &&
+        key !== "size" &&
         key !== "mm" &&
         !standardSpecificationKeys.includes(key)
     );
 
 const specificationKeys = [
   ...standardSpecificationKeys.filter(
-    key => specificationEntries.some(([entryKey]) => entryKey === key)
+    key =>
+      variantSpecificationKeys.includes(key) ||
+      specificationEntries.some(
+        ([entryKey, value]) =>
+        entryKey === key && value !== "—"
+    )
   ),
   ...additionalSpecificationKeys
 ];
@@ -181,16 +208,6 @@ specificationTable.className =
 const tableHead =
   specificationTable.createTHead().insertRow();
 
-const fallbackSizes =
-  (product.specifications.Size.match(/\d+(?:\.\d+)?/g) || [])
-    .map(size => `${size}"`);
-
-const sizeVariants =
-  product.sizeVariants ||
-  (fallbackSizes.length
-    ? fallbackSizes.map(size => ({ size }))
-    : null);
-
 const tableHeadings =
   [
     "Size",
@@ -237,9 +254,28 @@ tableRows.forEach(([key, ...values]) => {
     "row";
 
   heading.textContent =
-    replaceAndWithAmpersand(key);
+    replaceAndWithAmpersand(
+      key === "mm" ? "mm" : key
+    );
 
   tableRow.appendChild(heading);
+
+  if (
+    key === "Available Colors" &&
+    values.length > 1 &&
+    values.every(valueText => valueText === values[0])
+  ) {
+    const value =
+      tableRow.insertCell();
+
+    value.colSpan =
+      values.length;
+
+    value.textContent =
+      replaceAndWithAmpersand(values[0]);
+
+    return;
+  }
 
   values.forEach(valueText => {
 

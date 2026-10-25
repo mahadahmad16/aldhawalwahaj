@@ -1,6 +1,9 @@
 const slides =
   document.querySelectorAll(".home-hero-slide");
 
+const slidesContainer =
+  document.querySelector(".home-hero-slides");
+
 const dots =
   document.querySelectorAll(".hero-dot");
 
@@ -15,6 +18,9 @@ let slideInterval;
 
 
 function showSlide(index) {
+
+  slidesContainer.style.aspectRatio =
+    slides[index].dataset.aspectRatio;
 
   slides.forEach((slide, slideIndex) => {
     slide.classList.toggle(

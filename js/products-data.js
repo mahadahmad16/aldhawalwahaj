@@ -46,7 +46,10 @@ const createSizeVariants = (sourceSpecifications, specifications) => {
 
   return sizes.map((size, variantIndex) => {
     const variant = {
-      size: variantLabels[variantIndex]
+      size: variantLabels[variantIndex],
+      mm:
+        (specifications.mm || "").split(/\s*,\s*/)[variantIndex] ||
+        "—"
     };
 
     Object.entries(valuesBySpecification).forEach(([key, value]) => {
@@ -125,6 +128,7 @@ const createProduct = (
     Size: sizes.length
       ? sizes.map(value => `${value}"`).join(", ")
       : "—",
+    ...(specifications.mm ? { mm: specifications.mm } : {}),
     Volts: formatUnitValue(specifications.Voltage, "V"),
     Watts: formatUnitValue(specifications.Power, "W"),
     Hz: formatUnitValue(specifications.Frequency, "Hz"),
@@ -170,9 +174,15 @@ const createProduct = (
     description: Object.keys(specifications).length
       ? "Technical details listed below are taken from the supplied product catalog."
       : "The supplied catalog does not list technical specifications for this product. Contact us to confirm its details.",
-    sizeVariants:
-      sizeVariants ||
-      createSizeVariants(specifications, normalizedSpecifications),
+    sizeVariants: sizeVariants
+      ? sizeVariants.map((variant, index) => ({
+          ...variant,
+          mm:
+            variant.mm ||
+            (specifications.mm || "").split(/\s*,\s*/)[index] ||
+            "—"
+        }))
+      : createSizeVariants(specifications, normalizedSpecifications),
     specifications: normalizedSpecifications,
     features: []
   };
@@ -277,14 +287,32 @@ const products = [
     "Belvin Fans",
     "Circumatic Fan",
     "Belvin/Circumatic/Belvin Circumatic.png",
-    { Finish: "Off white" }
+    {
+      Size: "18 inch",
+      mm: "460",
+      Volts: "220",
+      Watts: "65",
+      Hz: "50",
+      Rpm: "1475", 
+      Cfm: "2473", 
+      Finish: "Off white" 
+    }
   ),
   createProduct(
     "Belvin Circumatic Fan Black",
     "Belvin Fans",
     "Circumatic Fan",
     "Belvin/Circumatic/Belvin Circumatic Black.png",
-    { Finish: "Black" }
+    {
+      Size: "18 inch",
+      mm: "460",
+      Volts: "220",
+      Watts: "65",
+      Hz: "50",
+      Rpm: "1475", 
+      Cfm: "2473", 
+      Finish: "Off white" 
+    }
   ),
   createProduct(
     "Belvin Pedestal Fan",
@@ -293,6 +321,7 @@ const products = [
     "Belvin/Pedestal/Belvin Pedestal.png",
     {
       Size: "24 inch",
+      mm: "600",
       Voltage: "220 V",
       Power: "125 W",
       Frequency: "50 Hz",
@@ -307,6 +336,7 @@ const products = [
     "Belvin/Pedestal/Belvin Pedestal Black.png",
     {
       Size: "24 inch",
+      mm: "600",
       Voltage: "220 V",
       Power: "125 W",
       Frequency: "50 Hz",
@@ -322,6 +352,7 @@ const products = [
     "Belvin/Wall/Belvin Wall Industrial.png",
     {
       Size: "24 inch",
+      mm: "600",
       Voltage: "220 V",
       Power: "125 W",
       Frequency: "50 Hz",
@@ -378,6 +409,7 @@ const products = [
     [
       {
         size: '8"',
+        mm: "200",
         Volts: "220-240 V",
         Watts: "250 W",
         Hz: "50/60 Hz",
@@ -386,6 +418,7 @@ const products = [
       },
       {
         size: '10"',
+        mm: "250",
         Volts: "220-240 V",
         Watts: "320 W",
         Hz: "50/60 Hz",
@@ -393,7 +426,8 @@ const products = [
         Cfm: "1520 CFM"
       },
       {
-        size: '12" (220-240)',
+        size: '12"',
+        mm: "300",
         Volts: "220-240 V",
         Watts: "520 W",
         Hz: "50/60 Hz",
@@ -401,7 +435,8 @@ const products = [
         Cfm: "2295 CFM"
       },
       {
-        size: '12" (110)',
+        size: '12"',
+        mm: "300",
         Volts: "110 V",
         Watts: "520 W",
         Hz: "60 Hz",
@@ -423,7 +458,37 @@ const products = [
       Frequency: "50/60 Hz (220-240 V); 60 Hz (110 V)",
       Speed: "2900/3300 RPM (220-240 V); 3300 RPM (110 V)",
       Airflow: "3390 CFM (16 inch); 5720 CFM (18 inch)"
-    }
+    },
+    null,
+    [
+      {
+        size: '16"',
+        mm: "400",
+        Volts: "220-240",
+        Watts: "1100",
+        Hz: "50/60",
+        Rpm: "2900/3300",
+        Cfm: "3390"
+      },
+      {
+        size: '16"',
+        mm: "400",
+        Volts: "110",
+        Watts: "1100",
+        Hz: "60",
+        Rpm: "3300",
+        Cfm: "3390"
+      },
+      {
+        size: '18"',
+        mm: "450",
+        Volts: "220-240",
+        Watts: "1500",
+        Hz: "50/60",
+        Rpm: "2900/3300",
+        Cfm: "5720"
+      }
+    ]
   ),
   createProduct(
     "GFC Axial Blower 24",
@@ -438,7 +503,37 @@ const products = [
       Frequency: "50 Hz",
       Speed: "3300 RPM (20 inch); 1400 RPM (24 inch)",
       Airflow: "6800 CFM (20 inch); 10250 CFM (24 inch)"
-    }
+    },
+    null,
+    [
+      {
+        size: '20"',
+        mm: "500",
+        Volts: "220",
+        Watts: "2000",
+        Hz: "50",
+        Rpm: "3300",
+        Cfm: "6800"
+      },
+      {
+        size: '24"',
+        mm: "600",
+        Volts: "220",
+        Watts: "2200",
+        Hz: "50",
+        Rpm: "1400",
+        Cfm: "10250"
+      },
+      {
+        size: '24"',
+        mm: "600",
+        Volts: "380",
+        Watts: "2200",
+        Hz: "50",
+        Rpm: "1400",
+        Cfm: "10250"
+      }
+    ]
   ),
   createProduct(
     "GFC AC/DC Ceiling Fan",
@@ -452,8 +547,27 @@ const products = [
       Power: "30 W",
       Speed: "330 RPM (AC); 325 RPM (DC)",
       Airflow: "8825 CFM",
-      "Available Colors": "White, Brown & Black"
-    }, "Awami"
+      "Available Colors": "White, Brown and Black"
+    }, "Awami", [
+      {
+        size: "AC",
+        mm: "1400",
+        Volts: "220 V",
+        Watts: "30 W",
+        Rpm: "330 RPM",
+        Cfm: "8825 CFM",
+        "Available Colors": "White, Brown and Black"
+      },
+      {
+        size: "DC",
+        mm: "1400",
+        Volts: "12 V",
+        Watts: "30 W",
+        Rpm: "325 RPM",
+        Cfm: "8825 CFM",
+        "Available Colors": "White, Brown and Black"
+      }
+    ]
   ),
   createProduct(
     "GFC Ceiling Fan Awami",
@@ -504,21 +618,49 @@ const products = [
     "VIP Old Plus"
   ),
   createProduct(
-    "GFC Circumatic Fan",
-    "GFC Fans",
-    "Circumatic Fan",
-    "GFC/Cirumatic/GFC Circumatic.png",
+  "GFC Circumatic Fan",
+  "GFC Fans",
+  "Circumatic Fan",
+  "GFC/Cirumatic/GFC Circumatic.png",
+  {
+    "Available Sizes": "16 and 18 inch",
+    mm: "400, 460"
+  },
+  null,
+  [
     {
-      Size: "18 inch",
-      mm: "—"
+      size: '16"',
+      mm: "400",
+      Volts: "230",
+      Watts: "55",
+      Hz: "50",
+      Rpm: "1475",
+      Cfm: "1589"
+    },
+    {
+      size: '18"',
+      mm: "460",
+      Volts: "230",
+      Watts: "65",
+      Hz: "50",
+      Rpm: "1475",
+      Cfm: "2473"
     }
-  ),
+  ]
+),
   createProduct(
     "GFC Air Cooler 6600",
     "GFC Fans",
     "Air Cooler",
     "GFC/Cooler & Mist/GFC Cooler 6600.png",
-    { "Water Tank": "65 L" },
+    {
+      Volts: "220-240",
+      Watts: "255",
+      Hz: "50/60",
+      Rpm: "1400",
+      Cfm: "7850",
+       "Water Tank": "65 L" 
+    },
     "6600"
   ),
   createProduct(
@@ -565,7 +707,16 @@ const products = [
       Frequency: "50 Hz (9 inch); 50/60 Hz (other sizes)",
       Speed: "1400 RPM",
       Airflow: "530 CFM (9 inch); 1060 CFM (12 inch); 1695 CFM (16 inch); 2895 CFM (18 inch); 6920 CFM (24 inch)"
-    }
+    },
+    null,
+    [
+      { size: '9"', mm: "230", Volts: "220-240", Watts: "50", Hz: "50/60", Rpm: "1400", Cfm: "530" },
+      { size: '12"', mm: "300", Volts: "220-240", Watts: "100", Hz: "50/60", Rpm: "1400", Cfm: "1060" },
+      { size: '16"', mm: "400", Volts: "220-240", Watts: "165", Hz: "50/60", Rpm: "1400", Cfm: "1695" },
+      { size: '18"', mm: "460", Volts: "220-240", Watts: "230", Hz: "50/60", Rpm: "1400", Cfm: "2895" },
+      { size: '24"', mm: "600", Volts: "220-240", Watts: "700", Hz: "50/60", Rpm: "1400", Cfm: "6920" },
+      { size: '24"', mm: "600", Volts: "380", Watts: "700", Hz: "50/60", Rpm: "1400", Cfm: "6920" }
+    ]
   ),
   createProduct(
     "GFC Metal Exhaust Fan",
@@ -580,7 +731,14 @@ const products = [
       Frequency: "50/60 Hz",
       Speed: "1400 RPM",
       Airflow: "1060 CFM (12 inch); 1525 CFM (16 inch); 2495 CFM (18 inch); 5340 CFM (24 inch)"
-    }
+    },
+    null,
+    [
+      { size: '12"', mm: "300", Volts: "220-240", Watts: "100", Hz: "50/60", Rpm: "1400", Cfm: "1060" },
+      { size: '16"', mm: "400", Volts: "220-240", Watts: "150", Hz: "50/60", Rpm: "1400", Cfm: "1525" },
+      { size: '18"', mm: "460", Volts: "220-240", Watts: "175", Hz: "50/60", Rpm: "1400", Cfm: "2495" },
+      { size: '24"', mm: "600", Volts: "220-240", Watts: "230", Hz: "50/60", Rpm: "1400", Cfm: "5340" }
+    ]
   ),
   createProduct(
     "GFC Louver Pedestal Fan",
