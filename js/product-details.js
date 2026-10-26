@@ -16,21 +16,29 @@ const productDisplayName =
   getProductDisplayName(product);
 
 const brandName =
-  product.brand.replace(/\s+Fans?$/i, "");
+  product.brand
+    ? product.brand.replace(/\s+Fans?$/i, "")
+    : "Accessories";
 
 
 document.title =
-  `${productDisplayName} | ${brandName} | Al Dhaw Al Wahaj`;
+  product.isAccessory
+    ? `${productDisplayName} | Al Dhaw Al Wahaj`
+    : `${productDisplayName} | ${brandName} | Al Dhaw Al Wahaj`;
 
 
 const productBrandLogo =
   document.getElementById("productBrandLogo");
 
-productBrandLogo.src =
-  brandLogos[product.brand];
+if (product.isAccessory) {
+  productBrandLogo.closest(".product-brand-display").hidden = true;
+} else {
+  productBrandLogo.src =
+    brandLogos[product.brand];
 
-productBrandLogo.alt =
-  `${brandName} logo`;
+  productBrandLogo.alt =
+    `${brandName} logo`;
+}
 
 
 document.getElementById(
@@ -57,10 +65,15 @@ document.getElementById(
   product.category;
 
 
-document.getElementById(
-  "productModel"
-).textContent =
+const productModel =
+  document.getElementById("productModel");
+
+productModel.textContent =
   product.model || "Not listed in catalog";
+
+if (product.isAccessory) {
+  productModel.parentElement.hidden = true;
+}
 
 
 document.getElementById(
@@ -101,6 +114,11 @@ const specifications =
   document.getElementById(
     "specifications"
   );
+
+if (product.isAccessory) {
+  document.querySelector(".product-detail-heading").hidden = true;
+  specifications.hidden = true;
+}
 
 const fallbackSizes =
   (product.specifications.Size.match(/\d+(?:\.\d+)?/g) || [])
@@ -293,6 +311,82 @@ tableRows.forEach(([key, ...values]) => {
 
 });
 
+if (product.id === "gn-fans-gn-industrial-suction-fan") {
+
+  const industrialSuctionColumns = [
+    ["Size (mm)", "Size (mm)"],
+    ["Volts", "Volts"],
+    ["Watts", "Watts"],
+    ["Hz", "Hz"],
+    ["Kg", "Kg"],
+    ["Rpm", "Rpm"],
+    ["m³/h", "m³/h"],
+    ["Blade Size (inch)", "Blade Size (inch)"]
+  ];
+
+  specificationTable.innerHTML = "";
+  specificationTable.className =
+    "specifications-table specifications-industrial-suction";
+
+  const industrialSuctionHead =
+    specificationTable.createTHead().insertRow();
+
+  industrialSuctionColumns.forEach(([label]) => {
+
+    const heading =
+      document.createElement("th");
+
+    heading.scope = "col";
+    heading.textContent = label;
+    industrialSuctionHead.appendChild(heading);
+
+  });
+
+  const industrialSuctionBody =
+    specificationTable.createTBody();
+
+  sizeVariants.forEach(variant => {
+
+    const row =
+      industrialSuctionBody.insertRow();
+
+    industrialSuctionColumns.forEach(([, key]) => {
+
+      const cell =
+        row.insertCell();
+
+      cell.textContent =
+        variant[key] || "—";
+
+    });
+
+  });
+
+}
+
+if (product.id === "gn-fans-gn-duct-fan") {
+
+  specificationTable.innerHTML = "";
+
+  const ductSizeHead =
+    specificationTable.createTHead().insertRow();
+
+  [
+    "Size",
+    ...sizeVariants.map(variant => variant.size)
+  ].forEach(label => {
+
+    const heading =
+      document.createElement("th");
+
+    heading.scope = "col";
+    heading.textContent = label;
+    ductSizeHead.appendChild(heading);
+
+  });
+
+}
+
 specificationTableWrapper.appendChild(specificationTable);
 specifications.appendChild(specificationTableWrapper);
 
@@ -375,6 +469,18 @@ related.forEach(item => {
   card.className =
     "related-product-card";
 
+  const relatedBrand =
+    item.isAccessory
+      ? ""
+      : `
+        <span class="related-product-brand">
+          <img
+            src="${brandLogos[item.brand]}"
+            alt="${item.brand}"
+          >
+        </span>
+      `;
+
   card.innerHTML = `
     <div class="related-product-image">
 
@@ -387,12 +493,7 @@ related.forEach(item => {
 
     <div class="related-product-content">
 
-      <span class="related-product-brand">
-        <img
-          src="${brandLogos[item.brand]}"
-          alt="${item.brand}"
-        >
-      </span>
+      ${relatedBrand}
 
       <h3>
         ${relatedProductDisplayName}

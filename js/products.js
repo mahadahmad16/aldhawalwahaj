@@ -91,7 +91,11 @@ renderFilterOptions(
 renderFilterOptions(
   "brandFilterOptions",
   "brand-filter",
-  [...new Set(products.map(product => product.brand))]
+  [...new Set(
+    products
+      .map(product => product.brand)
+      .filter(Boolean)
+  )]
     .sort((a, b) => a.localeCompare(b))
 );
 
@@ -139,7 +143,30 @@ function renderProducts(productList) {
       `product-details.html?id=${product.id}`;
 
     card.className =
-      "catalogue-product-card";
+      `catalogue-product-card${
+        product.isAccessory ? " accessory-card" : ""
+      }`;
+
+    const brandLogo =
+      product.isAccessory
+        ? ""
+        : `
+          <span class="catalogue-brand-logo">
+            <img
+              src="${brandLogos[product.brand]}"
+              alt="${product.brand}"
+            >
+          </span>
+        `;
+
+    const model =
+      product.isAccessory
+        ? ""
+        : `
+          <p>
+            Model: ${product.model || "Not listed in catalog"}
+          </p>
+        `;
 
     card.innerHTML = `
       <div class="catalogue-product-image">
@@ -149,12 +176,7 @@ function renderProducts(productList) {
           alt="${productDisplayName}"
         >
 
-        <span class="catalogue-brand-logo">
-          <img
-            src="${brandLogos[product.brand]}"
-            alt="${product.brand}"
-          >
-        </span>
+        ${brandLogo}
 
       </div>
 
@@ -168,9 +190,7 @@ function renderProducts(productList) {
           ${productDisplayName}
         </h3>
 
-        <p>
-          Model: ${product.model || "Not listed in catalog"}
-        </p>
+        ${model}
 
         <strong>
           View product →
@@ -209,7 +229,7 @@ function applyFilters() {
         product.name
           .toLowerCase()
           .includes(search) ||
-        product.brand
+        (product.brand || "")
           .toLowerCase()
           .includes(search) ||
         (product.model &&

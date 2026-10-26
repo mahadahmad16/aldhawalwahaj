@@ -84,6 +84,10 @@ const createSizeVariants = (sourceSpecifications, specifications) => {
 };
 
 const getProductDisplayName = product => {
+  if (!product.brand) {
+    return product.name;
+  }
+
   const brandName =
     product.brand.replace(/\s+Fans?$/i, "");
 
@@ -161,17 +165,20 @@ const createProduct = (
   };
 
   return {
-    id: `${brand}-${name}`
+    id: `${brand || "accessory"}-${name}`
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, "-")
       .replace(/^-|-$/g, ""),
     name,
     brand,
+    isAccessory: !brand,
     model,
     category,
     image: `../assets/Fans/${image}`,
     hasSpecifications: Object.keys(specifications).length > 0,
-    description: Object.keys(specifications).length
+    description: !brand
+      ? "Accessory product. Contact us for availability and compatibility details."
+      : Object.keys(specifications).length
       ? "Technical details listed below are taken from the supplied product catalog."
       : "The supplied catalog does not list technical specifications for this product. Contact us to confirm its details.",
     sizeVariants: sizeVariants
@@ -245,8 +252,9 @@ const products = [
     {
       Size: "18 inch",
       mm: "460",
-      Voltage: "220 V",
-      Power: "50 W",
+      Voltage: "220",
+      Power: "65",
+      Hz: "50",
       Speed: "1475 RPM",
       Airflow: "2473 CFM"
     }
@@ -762,6 +770,13 @@ const products = [
     "Wall Fan",
     "GFC/Louver/GFC Louver Wall.png",
     {
+      Size: "14 inch",
+      mm: "355",
+      Voltage: "220 V",
+      Power: "60 W",
+      Frequency: "50 Hz",
+      Speed: "1475 RPM",
+      Airflow: "2030 CFM",
       "Control options": "Manual or with remote"
     }
   ),
@@ -831,21 +846,6 @@ const products = [
     "Wall Fan",
     "GFC/Wall/GFC Wall Inusdtrial.png",
     {
-      "Available Sizes": "24 and 30 inch",
-      mm: "600, 760",
-      Voltage: "220 V",
-      Power: "125 W (24 inch); 280 W (30 inch)",
-      Frequency: "50 Hz",
-      Speed: "1475 RPM (24 inch); 1350 RPM (30 inch)",
-      Airflow: "6003 CFM (24 inch); 12500 CFM (30 inch)"
-    }
-  ),
-  createProduct(
-    "GFC Wall Fan Myga",
-    "GFC Fans",
-    "Wall Fan",
-    "GFC/Wall/GFC Wall Myga.png",
-    {
       "Available Sizes": "18, 24, 26 and 30 inch",
       mm: "460, 600, 650, 760",
       Voltage: "220-240 V",
@@ -853,6 +853,21 @@ const products = [
       Frequency: "50/60 Hz",
       Speed: "1400 RPM",
       Airflow: "4175 CFM (18 inch); 6380 CFM (24 inch); 7068 CFM (26 inch); 10000 CFM (30 inch)"
+    },
+  ),
+  createProduct(
+    "GFC Wall Fan Myga",
+    "GFC Fans",
+    "Wall Fan",
+    "GFC/Wall/GFC Wall Myga.png",
+    {
+      "Available Sizes": "24 and 30 inch",
+      mm: "600, 760",
+      Voltage: "220 V",
+      Power: "125 W (24 inch); 280 W (30 inch)",
+      Frequency: "50 Hz",
+      Speed: "1475 RPM (24 inch); 1350 RPM (30 inch)",
+      Airflow: "6003 CFM (24 inch); 12500 CFM (30 inch)"
     },
     "Myga"
   ),
@@ -884,8 +899,15 @@ const products = [
       Power: "250 W (24 inch); 400 W (30 inch); 500 W (36 inch); 600 W (48 inch)",
       Frequency: "50/60 Hz",
       Speed: "1250 RPM (24 inch); 1000 RPM (30 inch); 885 RPM (36 inch); 445 RPM (48 inch)",
-      Airflow: "11462 m³/h (24 inch); 17243 m³/h (30 inch); 18880 m³/h (36 inch); 20100 m³/h (48 inch)"
-    }
+      "m³/h": "11462 (24 inch); 17243 (30 inch); 18880 (36 inch); 20100 (48 inch)"
+    },
+    null,
+    [
+      { size: '24"', mm: "600", Volts: "220-240", Watts: "250", Hz: "50/60", Rpm: "1250", "m³/h": "11462" },
+      { size: '30"', mm: "750", Volts: "220-240", Watts: "400", Hz: "50/60", Rpm: "1000", "m³/h": "17243" },
+      { size: '36"', mm: "915", Volts: "220-240", Watts: "500", Hz: "50/60", Rpm: "885", "m³/h": "18880" },
+      { size: '48"', mm: "1200", Volts: "220-240", Watts: "600", Hz: "50/60", Rpm: "445", "m³/h": "20100" }
+    ]
   ),
   createProduct(
     "GN Floor Fan",
@@ -893,14 +915,21 @@ const products = [
     "Floor Fan",
     "GN/GN Floor.png",
     {
-      "Available Sizes": "12, 16 and 18 inch",
-      mm: "300, 400, 450",
+      "Available Sizes": "12, 16, 18 and 20 inch",
+      mm: "300, 400, 450, 500",
       Voltage: "220-240 V",
-      Power: "60 W (12 inch); 100 W (16 inch); 120 W (18 inch)",
+      Power: "60 W (12 inch); 100 W (16 inch); 120 W (18 inch); 150 W (20 inch)",
       Frequency: "50/60 Hz",
       Speed: "1400 RPM",
-      Airflow: "1275 CFM (12 inch); 2675 CFM (16 inch); 3355 CFM (18 inch)"
-    }
+      Airflow: "1275 CFM (12 inch); 2675 CFM (16 inch); 3355 CFM (18 inch); 3885 CFM (20 inch)"
+    },
+    null,
+    [
+      { size: '12"', mm: "300", Volts: "220-240", Watts: "60", Hz: "50/60", Rpm: "1400", Cfm: "1275" },
+      { size: '16"', mm: "400", Volts: "220-240", Watts: "100", Hz: "50/60", Rpm: "1400", Cfm: "2675" },
+      { size: '18"', mm: "450", Volts: "220-240", Watts: "120", Hz: "50/60", Rpm: "1400", Cfm: "3355" },
+      { size: '20"', mm: "500", Volts: "220-240", Watts: "150", Hz: "50/60", Rpm: "1400", Cfm: "3885" }
+    ]
   ),
   createProduct(
     "GN Inline Duct Fan",
@@ -911,11 +940,16 @@ const products = [
       "Available Sizes": "4 and 6 inch",
       mm: "100, 150",
       Voltage: "220-240 V",
-      Power: "40 W (4 inch); 100 W (6 inch)",
+      Power: "40 W (4 inch); 50 W (6 inch)",
       Frequency: "50/60 Hz",
       Speed: "2800 RPM",
       Airflow: "310 CFM (4 inch); 540 CFM (6 inch)"
-    }
+    },
+    null,
+    [
+      { size: '4"', mm: "100", Volts: "220-240", Watts: "40", Hz: "50/60", Rpm: "2800", Cfm: "310" },
+      { size: '6"', mm: "150", Volts: "220-240", Watts: "50", Hz: "50/60", Rpm: "2800", Cfm: "540" }
+    ]
   ),
   createProduct(
     "GN Misting Pedestal Fan",
@@ -940,14 +974,23 @@ const products = [
     "GN/GN Suction.png",
     {
       "Available Blade Sizes": "28, 30, 32, 42 and 48 inch",
-      mm: "—",
       Voltage: "220 V (28 and 30 inch); 380 V (32, 42 and 48 inch)",
       Power: "250 W (28 inch); 275 W (30 inch); 365 W (32 inch); 370 W (42 inch); 750 W (48 inch)",
       Frequency: "50/60 Hz (28 and 30 inch); 50 Hz (32, 42 and 48 inch)",
       Speed: "550 RPM (28, 30 and 32 inch); 400 RPM (42 and 48 inch)",
-      Airflow: "13600 m³/h (28 inch); 19480 m³/h (30 inch); 22550 m³/h (32 inch); 37720 m³/h (42 inch); 45365 m³/h (48 inch)",
-      Weight: "22.0 kg (28 inch); 25.0 kg (30 inch); 27.6 kg (32 inch); 35.1 kg (42 inch); 42.6 kg (48 inch)"
-    }
+      "Size (mm)": "800x800x350 (28 inch); 900x900x350 (30 inch); 1000x1000x400 (32 inch); 1220x1220x400 (42 inch); 1380x1380x400 (48 inch)",
+      Kg: "22.0 (28 inch); 25.0 (30 inch); 27.6 (32 inch); 35.1 (42 inch); 42.6 (48 inch)",
+      "m³/h": "13600 (28 inch); 19480 (30 inch); 22550 (32 inch); 37720 (42 inch); 45365 (48 inch)",
+      "Blade Size (inch)": "28 (28 inch); 30 (30 inch); 32 (32 inch); 42 (42 inch); 48 (48 inch)"
+    },
+    null,
+    [
+      { size: '28"', "Size (mm)": "800x800x350", Volts: "220", Watts: "250", Hz: "50/60", Kg: "22.0", Rpm: "550", "m³/h": "13600", "Blade Size (inch)": "28" },
+      { size: '30"', "Size (mm)": "900x900x350", Volts: "220", Watts: "275", Hz: "50/60", Kg: "25.0", Rpm: "550", "m³/h": "19480", "Blade Size (inch)": "30" },
+      { size: '32"', "Size (mm)": "1000x1000x400", Volts: "380", Watts: "365", Hz: "50", Kg: "27.6", Rpm: "550", "m³/h": "22550", "Blade Size (inch)": "32" },
+      { size: '42"', "Size (mm)": "1220x1220x400", Volts: "380", Watts: "370", Hz: "50", Kg: "35.1", Rpm: "440", "m³/h": "37720", "Blade Size (inch)": "42" },
+      { size: '48"', "Size (mm)": "1380x1380x400", Volts: "380", Watts: "750", Hz: "50", Kg: "42.6", Rpm: "400", "m³/h": "45365", "Blade Size (inch)": "48" }
+    ]
   ),
   createProduct(
     "GN Axial Blower 12",
@@ -961,11 +1004,13 @@ const products = [
       Power: "550 W",
       Frequency: "50/60 Hz",
       Speed: "2800 RPM",
-      Airflow: "2300 CFM (220-240 V); 2720 CFM (110 V option)",
-      "Power options": "550 W (220-240 V); 520 W (110 V)",
-      "Frequency options": "50/60 Hz (220-240 V); 60 Hz (110 V)",
-      "Speed options": "2800 RPM (220-240 V); 3300 RPM (110 V)"
-    }
+      Airflow: "2300 CFM (220-240 V); 2720 CFM (110 V option)"
+    },
+    null,
+    [
+      { size: '12"', mm: "300", Volts: "220-240", Watts: "550", Hz: "50/60", Rpm: "2800", Cfm: "2300" },
+      { size: '12"', mm: "300", Volts: "110", Watts: "520", Hz: "60", Rpm: "3300", Cfm: "2720" }
+    ]
   ),
   createProduct(
     "GN Axial Blower 16 and 18",
@@ -980,7 +1025,14 @@ const products = [
       Frequency: "50/60 Hz (220-240 V); 60 Hz (110 V)",
       Speed: "2800 RPM (220-240 V); 3300 RPM (110 V); 1720 RPM (18 inch alternative)",
       Airflow: "4950 CFM (16 inch); 5410 CFM (16 inch, 110 V); 7070 CFM (18 inch); 4240 CFM (18 inch alternative)"
-    }
+    },
+    null,
+    [
+      { size: '16"', mm: "400", Volts: "220-240", Watts: "1100", Hz: "50/60", Rpm: "2800", Cfm: "4950" },
+      { size: '16"', mm: "400", Volts: "110", Watts: "1100", Hz: "60", Rpm: "3300", Cfm: "5410" },
+      { size: '18"', mm: "450", Volts: "220-240", Watts: "1800", Hz: "50/60", Rpm: "2800", Cfm: "7070" },
+      { size: '18"', mm: "450", Volts: "220-240", Watts: "750", Hz: "50/60", Rpm: "1720", Cfm: "4240" }
+    ]
   ),
   createProduct(
     "GN Axial Blower 24",
@@ -995,7 +1047,13 @@ const products = [
       Frequency: "50/60 Hz (220-240 and 380 V); 60 Hz (110 V)",
       Speed: "1450 RPM",
       Airflow: "10250 CFM"
-    }
+    },
+    null,
+    [
+      { size: '24"', mm: "600", Volts: "220-240", Watts: "2200", Hz: "50/60", Rpm: "1450", Cfm: "10250" },
+      { size: '24"', mm: "600", Volts: "110", Watts: "2200", Hz: "60", Rpm: "1450", Cfm: "10250" },
+      { size: '24"', mm: "600", Volts: "380", Watts: "2200", Hz: "50/60", Rpm: "1450", Cfm: "10250" }
+    ]
   ),
   createProduct(
     "GN Axial Blower 32",
@@ -1018,8 +1076,7 @@ const products = [
     "Duct Fan",
     "GN/Axial Blower/GN Duct.png",
     {
-      "Available Sizes": "8, 10, 12, 16, 18, 20, 24 and 32 inch",
-      mm: "—"
+      "Available Sizes": "12, 16, 18, 24, 32",
     }
   ),
   createProduct(
@@ -1043,10 +1100,10 @@ const products = [
     "Air Cooler",
     "GN/Cooler/GN Cooler 140.png",
     {
-      Voltage: "220-240 V",
-      Power: "1100 W",
-      Frequency: "50/60 Hz",
-      Airflow: "23500 m³/h",
+      Voltage: "220-240",
+      Power: "1100",
+      Frequency: "50/60",
+      "m³/h": "23500",
       "Water Tank": "140 L",
       Weight: "70 kg"
     },
@@ -1076,14 +1133,20 @@ const products = [
     "Pedestal Fan",
     "GN/Pedestal/GN Pedestal Industrial 24 30.png",
     {
-      "Available Sizes": "24 and 30 inch",
-      mm: "600, 760",
-      Voltage: "220-240 V",
+      "Available Sizes": "24, 24 and 30 inch",
+      mm: "600, 600, 760",
+      Voltage: "110 V (24 inch); 220-240 V (24 and 30 inch)",
       Power: "150 W (24 inch); 350 W (30 inch)",
       Frequency: "50/60 Hz",
       Speed: "1400 RPM",
       Airflow: "6380 CFM (24 inch); 10000 CFM (30 inch)"
-    }
+    },
+    null,
+    [
+      { size: '24"', mm: "600", Volts: "110", Watts: "150", Hz: "60", Rpm: "1400", Cfm: "6380" },
+      { size: '24"', mm: "600", Volts: "220-240", Watts: "150", Hz: "50/60", Rpm: "1400", Cfm: "6380" },
+      { size: '30"', mm: "760", Volts: "220-240", Watts: "350", Hz: "50/60", Rpm: "1400", Cfm: "10000" }
+    ]
   ),
   createProduct(
     "GN Industrial Pedestal Fan 26",
@@ -1156,7 +1219,7 @@ const products = [
       Power: "130 W",
       Frequency: "50 Hz",
       Speed: "2550 RPM",
-      "Air Delivery": "2525 m³/h",
+      "m³/h": "2525",
       "Water Tank": "46 L"
     },
     "Cruze-45"
@@ -1171,7 +1234,7 @@ const products = [
       Power: "850 W",
       Frequency: "50 Hz",
       Speed: "1250 RPM",
-      "Air Delivery": "14400 m³/h",
+      "m³/h": "14400",
       "Water Tank": "130 L"
     },
     "Everest"
@@ -1186,7 +1249,7 @@ const products = [
       Power: "205 W",
       Frequency: "50 Hz",
       Speed: "1360 RPM",
-      "Air Delivery": "4020 m³/h",
+      "m³/h": "4020",
       "Water Tank": "110 L"
     },
     "Polo"
@@ -1197,14 +1260,21 @@ const products = [
     "Exhaust Fan",
     "Khaitan/Khaitan Exhaust.png",
     {
-      "Available Sizes": "12, 18, 24 and 30 inch",
-      mm: "300, 450, 600, 750",
+      "Available Sizes": "12, 15, 18 and 24 inch",
+      mm: "300, 380, 450, 600",
       Voltage: "220-240 V",
-      Power: "90 W (12 inch); 160 W (18 inch); 370 W (24 inch); 550 W (30 inch)",
+      Power: "90 W (12 inch); 160 W (15 inch); 370 W (18 inch); 550 W (24 inch)",
       Frequency: "50 Hz",
-      Speed: "1400 RPM (12, 18 and 24 inch); 900 RPM (30 inch)",
-      Airflow: "1010 CFM (12 inch); 1915 CFM (18 inch); 3605 CFM (24 inch); 5535 CFM (30 inch)"
-    }
+      Speed: "1400 RPM (12, 15 and 18 inch); 900 RPM (24 inch)",
+      Airflow: "1010 CFM (12 inch); 1915 CFM (15 inch); 3605 CFM (18 inch); 5535 CFM (24 inch)"
+    },
+    null,
+    [
+      { size: '12"', mm: "300", Volts: "220-240", Watts: "90", Hz: "50", Rpm: "1400", Cfm: "1010" },
+      { size: '15"', mm: "380", Volts: "220-240", Watts: "160", Hz: "50", Rpm: "1400", Cfm: "1915" },
+      { size: '18"', mm: "450", Volts: "220-240", Watts: "370", Hz: "50", Rpm: "1400", Cfm: "3605" },
+      { size: '24"', mm: "600", Volts: "220-240", Watts: "550", Hz: "50", Rpm: "900", Cfm: "5535" }
+    ]
   ),
   createProduct(
     "Khaitan Industrial Pedestal Fan",
@@ -1235,5 +1305,65 @@ const products = [
       Speed: "1400 RPM",
       Airflow: "5300 CFM (18 inch); 9540 CFM (24 inch); 13075 CFM (30 inch)"
     }
+  ),
+  createProduct(
+    "Dimmer",
+    "",
+    "Accessories",
+    "Aces/Dimmer.png"
+  ),
+  createProduct(
+    "Bird Doorbell",
+    "",
+    "Accessories",
+    "Aces/Door Bell Bird.png"
+  ),
+  createProduct(
+    "Ding Dong Doorbell",
+    "",
+    "Accessories",
+    "Aces/Door Bell Ding Dong.png"
+  ),
+  createProduct(
+    "Dark Hut Doorbell",
+    "",
+    "Accessories",
+    "Aces/Door Bell Hut Dark.png"
+  ),
+  createProduct(
+    "Light Hut Doorbell",
+    "",
+    "Accessories",
+    "Aces/Door Bell Hut Light.png"
+  ),
+  createProduct(
+    "White Hut Doorbell",
+    "",
+    "Accessories",
+    "Aces/Door Bell Hut White.png"
+  ),
+  createProduct(
+    "Batten Holder",
+    "",
+    "Accessories",
+    "Aces/Holder Batten.png"
+  ),
+  createProduct(
+    "Fancy Gold Holder",
+    "",
+    "Accessories",
+    "Aces/Holder Fancy Gold.png"
+  ),
+  createProduct(
+    "Fancy Silver Holder",
+    "",
+    "Accessories",
+    "Aces/Holder Fancy Silver.png"
+  ),
+  createProduct(
+    "Pendant Holder",
+    "",
+    "Accessories",
+    "Aces/Holder Pendent.png"
   )
 ];
