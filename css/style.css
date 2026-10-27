@@ -31,6 +31,27 @@ button{font:inherit}
 .mobile-nav{display:none}
 .mobile-nav.show{display:flex;flex-direction:column}
 .nav.open{display:flex}
+.main-nav a.mega-menu-link::after,.nav a.mega-menu-link::after{content:"";position:static;display:inline-block;width:6px;height:6px;margin:0 0 3px 8px;border:0;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;background:transparent;transform:rotate(45deg);transition:transform .2s ease}
+.main-nav a.mega-menu-link[aria-expanded="true"]::after,.nav a.mega-menu-link[aria-expanded="true"]::after{transform:rotate(225deg);margin-bottom:-1px}
+.mega-menu-panel{position:absolute;top:100%;left:0;z-index:60;display:none;width:100%;background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line);box-shadow:0 16px 28px rgba(15,28,31,.12)}
+.mega-menu-panel.is-open{display:block}
+.mega-menu-content{padding:32px 0 36px}
+.mega-menu-intro{padding-right:35px;border-right:1px solid var(--line)}
+.mega-menu-intro span{display:block;color:var(--accent);font-size:10px;font-weight:800;letter-spacing:1.5px}
+.mega-menu-intro p{margin:9px 0 16px;color:var(--muted);font-size:13px;line-height:1.6}
+.mega-menu-intro a{display:inline-flex;align-items:center;gap:8px;color:var(--ink);font-size:12px;font-weight:800}
+.mega-menu-intro a:hover{color:var(--accent)}
+.mega-menu-intro b{font-size:17px;font-weight:500}
+.mega-menu-groups{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:26px}
+.mega-menu-group h2{margin-bottom:10px;color:var(--ink);font:700 15px Manrope,sans-serif}
+.mega-menu-group a{display:block;padding:4px 0;color:var(--muted);font-size:13px;line-height:1.45}
+.mega-menu-group a:hover{color:var(--accent)}
+.mega-menu-panel--brands{left:50%;width:min(620px,calc(100% - 48px));transform:translateX(-50%);border:1px solid var(--line);border-radius:0 0 10px 10px}
+.mega-menu-panel--brands .mega-menu-content{padding:24px 30px}
+.mega-menu-panel--brands .mega-menu-groups{display:block}
+.mega-menu-panel--brands .mega-menu-group{display:grid;grid-template-columns:repeat(3,minmax(140px,max-content));column-gap:40px;row-gap:5px}
+.mega-menu-panel--brands .mega-menu-group h2{grid-column:1/-1;margin-bottom:5px}
+.mega-menu-panel--brands .mega-menu-group a{padding:3px 0}
 .hero{height:650px;position:relative;background:#172326;color:#fff;overflow:hidden}
 .hero-slides,.hero-slide{position:absolute;inset:0}
 .hero-slide{opacity:0;background-position:center;background-size:cover;transition:opacity .7s ease}
@@ -2230,8 +2251,17 @@ button{font:inherit}
 .home-hero-slide {
   position: absolute;
   inset: 0;
-  opacity: 0;
-  transition: opacity 1s ease;
+  z-index: 1;
+  transform: translateX(100%);
+  transition: transform .7s ease-in-out;
+}
+
+.home-hero-slide.is-left {
+  transform: translateX(-100%);
+}
+
+.home-hero-slide.is-instant {
+  transition: none;
 }
 
 .home-hero-slide img {
@@ -2241,10 +2271,12 @@ button{font:inherit}
 }
 
 .home-hero-slide.active {
-  opacity: 1;
+  z-index: 2;
+  transform: translateX(0);
 }
 
 .hero-slider-controls {
+  display: none;
   position: absolute;
   right: clamp(16px, 3vw, 48px);
   bottom: clamp(14px, 2vw, 32px);
@@ -2746,10 +2778,7 @@ button{font:inherit}
 }
 
 .products-layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 55px;
-  align-items: start;
+  display: block;
 }
 
 .products-sidebar {
@@ -2980,4 +3009,52 @@ button{font:inherit}
 
 .products-cta-box {
   background: #111;
+}
+
+
+/* =================================================================
+   LEFT-PUSH HERO SLIDER ANIMATION (Al Dhaw Al Wahaj)
+   ================================================================= */
+
+.home-hero-slides {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 2172 / 724;
+  overflow: hidden;
+  background-color: #ffffff; /* Prevents dark background flashing */
+}
+
+.home-hero-slide {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform: translateX(100%); /* Waiting off-screen to the right */
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Active slide currently on screen */
+.home-hero-slide.active {
+  z-index: 2;
+  transform: translateX(0);
+}
+
+/* 
+  CRITICAL: When a slide is marked .is-left, 
+  it actively exits to the left (-100%) instead of staying in place.
+*/
+.home-hero-slide.is-left {
+  z-index: 1;
+  transform: translateX(-100%);
+}
+
+.home-hero-slide.is-instant {
+  transition: none !important;
+}
+
+.home-hero-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  display: block;
 }

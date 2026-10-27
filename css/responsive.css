@@ -37,6 +37,20 @@
 
 }
 
+@media (max-width: 600px) {
+
+  .home-hero-slides {
+    aspect-ratio: 16 / 9 !important;
+    min-height: 250px;
+  }
+
+  .home-hero-slide img {
+    object-fit: cover;
+    object-position: left center;
+  }
+
+}
+
 @media (max-width: 700px) {
 
   .page-hero {
@@ -259,7 +273,6 @@
   }
 
 }
-
 
 /* About Page Responsive */
 
@@ -971,6 +984,51 @@
   .site-footer .footer-grid,.footer .footer-grid,.footer-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:32px 24px}
   .site-footer .footer-grid>div,.footer .footer-grid>div,.footer-grid>div{min-width:0}
   .site-footer p,.site-footer a,.footer p,.footer a{overflow-wrap:anywhere}
+}
+
+@media (max-width: 900px) {
+  .main-nav.open,
+  .nav.open {
+    display: flex !important;
+  }
+
+  .mega-menu-panel,
+  .mega-menu-panel--brands {
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
+    transform: none;
+    border-radius: 0;
+  }
+
+  .mega-menu-panel.is-open {
+    display: block !important;
+  }
+
+  .mega-menu-content,
+  .mega-menu-panel--brands .mega-menu-content {
+    padding: 22px 5%;
+  }
+
+  .mega-menu-groups,
+  .mega-menu-panel--brands .mega-menu-group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 24px;
+  }
+
+  .mega-menu-panel--brands .mega-menu-groups {
+    display: block;
+  }
+
+  .mega-menu-group h2 {
+    font-size: 14px;
+  }
+
+  .mega-menu-group a {
+    font-size: 12px;
+  }
 }
 @media(max-width:520px){
   .brand-logo,.logo{min-width:0}.brand-logo-text strong,.logo strong{font-size:13px}.brand-mark,.logo-mark{width:38px;height:38px}
@@ -2065,6 +2123,53 @@
   .brand-detail-card .brand-detail-image,
   .brand-detail-card.reverse .brand-detail-image {
     aspect-ratio: 4 / 3;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .main-nav.open,
+  .nav.open {
+    display: flex !important;
+  }
+
+  .mega-menu-panel,
+  .mega-menu-panel--brands {
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: calc(100vh - 72px);
+    overflow-y: auto;
+    transform: none;
+    border-radius: 0;
+  }
+
+  .mega-menu-panel.is-open {
+    display: block !important;
+  }
+
+}
+
+@media (max-width: 900px) {
+
+  .main-nav a.mega-menu-link::after,
+  .nav a.mega-menu-link::after {
+    position: static;
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 0 3px 8px;
+    border: 0;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    background: transparent;
+    transform: rotate(45deg);
+  }
+
+  .main-nav a.mega-menu-link[aria-expanded="true"]::after,
+  .nav a.mega-menu-link[aria-expanded="true"]::after {
+    transform: rotate(225deg);
   }
 
 }

@@ -10,14 +10,8 @@ const productsCount =
 const filterStatus =
   document.getElementById("filterStatus");
 
-const productSearch =
-  document.getElementById("productSearch");
-
 const sortProducts =
   document.getElementById("sortProducts");
-
-const clearFilters =
-  document.getElementById("clearFilters");
 
 const resetProducts =
   document.getElementById("resetProducts");
@@ -25,88 +19,27 @@ const resetProducts =
 const productCatalogueStateKey =
   "productCatalogueState";
 
+const params =
+  new URLSearchParams(
+    window.location.search
+  );
+
+const category =
+  params.get("category");
+
+const brand =
+  params.get("brand");
+
 
 function saveCatalogueState(scrollY = window.scrollY) {
 
   sessionStorage.setItem(
     productCatalogueStateKey,
     JSON.stringify({
-      search: productSearch.value,
-      categories: getSelectedValues(".category-filter"),
-      brands: getSelectedValues(".brand-filter"),
       sort: sortProducts.value,
       scrollY
     })
   );
-
-}
-
-
-function renderFilterOptions(containerId, className, values) {
-
-  const container =
-    document.getElementById(containerId);
-
-  values.forEach(value => {
-
-    const label =
-      document.createElement("label");
-
-    label.className =
-      "filter-option";
-
-    const input =
-      document.createElement("input");
-
-    input.type =
-      "checkbox";
-
-    input.className =
-      className;
-
-    input.value =
-      value;
-
-    const text =
-      document.createElement("span");
-
-    text.textContent =
-      value;
-
-    label.append(input, text);
-    container.appendChild(label);
-
-  });
-
-}
-
-
-renderFilterOptions(
-  "categoryFilterOptions",
-  "category-filter",
-  [...new Set(products.map(product => product.category))]
-    .sort((a, b) => a.localeCompare(b))
-);
-
-renderFilterOptions(
-  "brandFilterOptions",
-  "brand-filter",
-  [...new Set(
-    products
-      .map(product => product.brand)
-      .filter(Boolean)
-  )]
-    .sort((a, b) => a.localeCompare(b))
-);
-
-
-function getSelectedValues(selector) {
-
-  return Array.from(
-    document.querySelectorAll(
-      `${selector}:checked`
-    )
-  ).map(input => input.value);
 
 }
 
@@ -207,56 +140,20 @@ function renderProducts(productList) {
 
 
 function applyFilters() {
-
-  const search =
-    productSearch.value
-      .trim()
-      .toLowerCase();
-
-  const selectedCategories =
-    getSelectedValues(".category-filter");
-
-  const selectedBrands =
-    getSelectedValues(".brand-filter");
-
   saveCatalogueState();
 
   let filtered =
     products.filter(product => {
 
-      const matchesSearch =
-        !search ||
-        product.name
-          .toLowerCase()
-          .includes(search) ||
-        (product.brand || "")
-          .toLowerCase()
-          .includes(search) ||
-        (product.model &&
-          product.model
-            .toLowerCase()
-            .includes(search)) ||
-        product.category
-          .toLowerCase()
-          .includes(search);
-
-
       const matchesCategory =
-        selectedCategories.length === 0 ||
-        selectedCategories.includes(
-          product.category
-        );
+        !category || product.category === category;
 
 
       const matchesBrand =
-        selectedBrands.length === 0 ||
-        selectedBrands.includes(
-          product.brand
-        );
+        !brand || product.brand === brand;
 
 
       return (
-        matchesSearch &&
         matchesCategory &&
         matchesBrand
       );
@@ -289,53 +186,15 @@ function applyFilters() {
   if (sort === "brand") {
 
     filtered.sort((a, b) =>
-      a.brand.localeCompare(b.brand)
-    );
-
-  }
-
-
-  const statusParts = [];
-
-
-  if (search) {
-
-    statusParts.push(
-      `Search: "${productSearch.value.trim()}"`
-    );
-
-  }
-
-
-  if (selectedCategories.length) {
-
-    statusParts.push(
-      `${selectedCategories.length} category filter${
-        selectedCategories.length > 1
-          ? "s"
-          : ""
-      }`
-    );
-
-  }
-
-
-  if (selectedBrands.length) {
-
-    statusParts.push(
-      `${selectedBrands.length} brand filter${
-        selectedBrands.length > 1
-          ? "s"
-          : ""
-      }`
+      (a.brand || "").localeCompare(b.brand || "")
     );
 
   }
 
 
   filterStatus.textContent =
-    statusParts.length
-      ? statusParts.join(" • ")
+    category || brand
+      ? `Showing ${category || brand}`
       : "Showing all products";
 
 
@@ -345,53 +204,16 @@ function applyFilters() {
 
 
 function clearAllFilters() {
-
-  productSearch.value = "";
-
-  document
-    .querySelectorAll(
-      ".category-filter, .brand-filter"
-    )
-    .forEach(input => {
-      input.checked = false;
-    });
-
   sortProducts.value = "default";
 
-  applyFilters();
+  window.location.href =
+    window.location.pathname;
 
 }
-
-
-productSearch.addEventListener(
-  "input",
-  applyFilters
-);
-
 
 sortProducts.addEventListener(
   "change",
   applyFilters
-);
-
-
-document
-  .querySelectorAll(
-    ".category-filter, .brand-filter"
-  )
-  .forEach(input => {
-
-    input.addEventListener(
-      "change",
-      applyFilters
-    );
-
-  });
-
-
-clearFilters.addEventListener(
-  "click",
-  clearAllFilters
 );
 
 
@@ -400,18 +222,6 @@ resetProducts.addEventListener(
   clearAllFilters
 );
 
-
-const params =
-  new URLSearchParams(
-    window.location.search
-  );
-
-
-const category =
-  params.get("category");
-
-const brand =
-  params.get("brand");
 
 let savedCatalogueState = null;
 const savedCatalogueStateJson =
@@ -436,60 +246,8 @@ if (savedCatalogueStateJson) {
 }
 
 if (savedCatalogueState) {
-
-  productSearch.value =
-    savedCatalogueState.search || "";
-
   sortProducts.value =
     savedCatalogueState.sort || "default";
-
-  document
-    .querySelectorAll(".category-filter")
-    .forEach(input => {
-
-      input.checked =
-        Array.isArray(savedCatalogueState.categories) &&
-        savedCatalogueState.categories.includes(input.value);
-
-    });
-
-  document
-    .querySelectorAll(".brand-filter")
-    .forEach(input => {
-
-      input.checked =
-        Array.isArray(savedCatalogueState.brands) &&
-        savedCatalogueState.brands.includes(input.value);
-
-    });
-
-}
-
-
-if (category || brand) {
-
-  document
-    .querySelectorAll(".category-filter")
-    .forEach(input => {
-
-      input.checked =
-        Boolean(category) &&
-        input.value
-          .toLowerCase()
-          .includes(category.toLowerCase());
-
-    });
-
-  document
-    .querySelectorAll(".brand-filter")
-    .forEach(input => {
-
-      input.checked =
-        Boolean(brand) &&
-        input.value === brand;
-
-    });
-
 }
 
 
