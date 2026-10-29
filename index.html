@@ -25,7 +25,7 @@
 
 <body>
 
-    <div class="topbar">
+  <div class="topbar">
 
     <div class="container topbar-inner">
 
@@ -90,24 +90,24 @@
 
       <div class="home-hero-slides">
 
-        <div
-          class="home-hero-slide active"
-          data-aspect-ratio="2172 / 724"
-        >
-          <img src="assets/banner 1.png" alt="Al Dhaw Al Wahaj fan product range">
+        <!-- Slide 1: desktop banner + mobile banner -->
+        <div class="home-hero-slide active">
+          <picture>
+            <source media="(max-width: 600px)" srcset="assets/mobile banner 1.png">
+            <img src="assets/banner 1.png" alt="Al Dhaw Al Wahaj fan product range">
+          </picture>
         </div>
 
-        <div
-          class="home-hero-slide"
-          data-aspect-ratio="2048 / 768"
-        >
-          <img src="assets/banner 2.png" alt="Al Dhaw Al Wahaj fans for home comfort">
+        <!-- Slide 2: desktop banner + mobile banner -->
+        <div class="home-hero-slide">
+          <picture>
+            <source media="(max-width: 600px)" srcset="assets/mobile banner 2.png">
+            <img src="assets/banner 2.png" alt="Al Dhaw Al Wahaj fans for home comfort">
+          </picture>
         </div>
 
-        <div
-          class="home-hero-slide"
-          data-aspect-ratio="2048 / 768"
-        >
+        <!-- Slide 3: desktop only (no mobile version yet) -->
+        <div class="home-hero-slide desktop-only">
           <img src="assets/banner 3.png" alt="Al Dhaw Al Wahaj premium fan collection">
         </div>
 

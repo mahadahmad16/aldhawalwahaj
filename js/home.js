@@ -1,44 +1,66 @@
 (function () {
   const container = document.querySelector(".home-hero-slides");
-  const slides = Array.from(document.querySelectorAll(".home-hero-slide"));
+  const allSlides = Array.from(document.querySelectorAll(".home-hero-slide"));
   const hero = document.querySelector(".home-hero");
 
-  if (!container || slides.length < 2) return;
+  if (!container || allSlides.length < 2) return;
 
   // Controls are intentionally not used on this page
   document.querySelector(".hero-slider-controls")?.remove();
 
-  const SLIDE_DELAY = 3000;
-  const DURATION = 500;
+  const SLIDE_DELAY = 5000;
+  const DURATION = 700;
   const EASING = "cubic-bezier(0.4, 0, 0.2, 1)";
+  const mobileQuery = window.matchMedia("(max-width: 600px)");
 
+  let slides = [];
   let current = 0;
   let animating = false;
   let timer;
+  let resetTimeout;
 
-  // Self-contained setup: inline styles beat any leftover CSS
-  container.style.position = "relative";
-  container.style.overflow = "hidden";
-  container.style.aspectRatio = "2172 / 724";
+  function setup() {
+    stop();
+    clearTimeout(resetTimeout);
+    animating = false;
 
-  slides.forEach((slide, i) => {
-    slide.classList.remove("active", "is-left", "is-instant");
-    slide.style.position = "absolute";
-    slide.style.inset = "0";
-    slide.style.willChange = "transform";
-    slide.style.transition = "none";
-    slide.style.transform = i === 0 ? "translateX(0)" : "translateX(100%)";
-    slide.style.zIndex = i === 0 ? "2" : "1";
-  });
+    // Only slides that are visible at this screen size take part
+    // (e.g. a slide marked .desktop-only is hidden on mobile by CSS)
+    slides = allSlides.filter(
+      (slide) => getComputedStyle(slide).display !== "none"
+    );
+    current = 0;
+
+    // Banner height comes from CSS (aspect-ratio), so it is never set here
+    container.style.position = "relative";
+    container.style.overflow = "hidden";
+
+    allSlides.forEach((slide) => {
+      slide.classList.remove("active", "is-left", "is-instant");
+      slide.style.position = "absolute";
+      slide.style.inset = "0";
+      slide.style.willChange = "transform";
+      slide.style.transition = "none";
+      slide.style.transform = "translateX(100%)";
+      slide.style.zIndex = "1";
+    });
+
+    if (!slides.length) return;
+
+    slides[0].style.transform = "translateX(0)";
+    slides[0].style.zIndex = "2";
+
+    if (slides.length > 1) start();
+  }
 
   function goTo(next) {
-    if (animating || next === current) return;
+    if (animating || next === current || slides.length < 2) return;
     animating = true;
 
     const outgoing = slides[current];
     const incoming = slides[next];
 
-    // Make sure the incoming slide waits on the right, without animation
+    // Incoming slide waits on the right, without animation
     incoming.style.transition = "none";
     incoming.style.transform = "translateX(100%)";
     incoming.style.zIndex = "2";
@@ -54,7 +76,7 @@
 
     current = next;
 
-    setTimeout(function () {
+    resetTimeout = setTimeout(function () {
       // Park the old slide back on the right, unseen
       outgoing.style.transition = "none";
       outgoing.style.transform = "translateX(100%)";
@@ -78,8 +100,16 @@
   hero?.addEventListener("mouseenter", stop);
   hero?.addEventListener("mouseleave", start);
   document.addEventListener("visibilitychange", function () {
-    document.hidden ? stop() : start();
+    if (document.hidden) stop();
+    else if (slides.length > 1) start();
   });
 
-  start();
+  // Re-run when the screen crosses the mobile breakpoint (rotate / resize)
+  if (mobileQuery.addEventListener) {
+    mobileQuery.addEventListener("change", setup);
+  } else {
+    mobileQuery.addListener(setup);
+  }
+
+  setup();
 })();

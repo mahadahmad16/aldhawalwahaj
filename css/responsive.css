@@ -2173,3 +2173,47 @@
   }
 
 }
+
+
+@media (max-width: 900px) {
+
+  .main-nav .mega-menu-panel a,
+  .nav .mega-menu-panel a {
+    padding: 4px 0;
+    width: auto;
+  }
+
+  .mega-menu-content,
+  .mega-menu-panel--brands .mega-menu-content {
+    padding: 14px 5%;
+  }
+
+  .mega-menu-intro {
+    padding-right: 0;
+    border-right: 0;
+    margin-bottom: 8px;
+  }
+
+  .mega-menu-intro p {
+    margin: 6px 0 10px;
+  }
+
+  .mega-menu-groups,
+  .mega-menu-panel--brands .mega-menu-group {
+    gap: 8px 24px;
+  }
+}
+
+@media (max-width: 900px) {
+
+  .mega-menu-panel--products .mega-menu-groups {
+    display: block;
+    column-count: 2;
+    column-gap: 24px;
+  }
+
+  .mega-menu-panel--products .mega-menu-group {
+    break-inside: avoid;
+    margin-bottom: 18px;
+  }
+}
