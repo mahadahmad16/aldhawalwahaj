@@ -2213,3 +2213,8 @@ button { font: inherit; }
 .no-products p { margin-bottom: 25px; color: var(--muted); }
 .products-catalogue-cta { background: var(--soft); }
 .products-cta-box { background: #111; }
+
+/* Remove doubled spacing between two grey sections in a row */
+.soft-section + .soft-section {
+  padding-top: 0;
+}

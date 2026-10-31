@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
       eyebrow: "PRODUCT CATALOGUE",
       queryKey: "category",
       groups: [
-        { title: "Fans", links: ["Ceiling Fan", "Circumatic Fan", "Drum Fan", "Exhaust Fan", "False Ceiling Fan", "Floor Fan", "Mist Fan", "Pedestal Fan", "Wall Fan"] },
-        { title: "Ventilation", links: ["Axial Blower", "Duct Fan", "Suction Fan"] },
+        { title: "Fans", links: ["Ceiling Fan", "Circumatic Fan", "Drum Fan", "False Ceiling Fan", "Floor Fan", "Mist Fan", "Pedestal Fan", "Wall Fan"] },
+        { title: "Ventilation", links: ["Axial Blower", "Exhaust Fan", "Suction Fan"] },
         { title: "Cooling", links: ["Air Cooler"] },
         { title: "More", links: ["Accessories"] }
       ]

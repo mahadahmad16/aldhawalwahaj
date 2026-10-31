@@ -196,208 +196,10 @@ const createProduct = (
 };
 
 const products = [
-  createProduct(
-    "Classic Misting Pedestal Fan",
-    "Classic Fans",
-    "Mist Fan",
-    "Classic Mist Pedestal.png",
-    {
-      "Available Sizes": "26 inch and 30 inch",
-      mm: "660, 750",
-      Voltage: "220-240 V",
-      Power: "250 W (26 inch); 300 W (30 inch)",
-      Frequency: "50/60 Hz",
-      Speed: "1400 RPM",
-      Airflow: "7800 CFM (26 inch); 9800 CFM (30 inch)",
-      "Water Tank": "41 L"
-    }
-  ),
-  createProduct(
-    "Classic Misting Wall Fan",
-    "Classic Fans",
-    "Mist Fan",
-    "Classic Mist Wall.png",
-    {
-      Size: "26 inch",
-      mm: "660",
-      Voltage: "220-240 V",
-      Power: "250 W",
-      Frequency: "50/60 Hz",
-      Speed: "1400 RPM",
-      Airflow: "7800 CFM",
-      "Water Tank": "10 L"
-    }
-  ),
-  createProduct(
-    "Classic Pedestal Fan",
-    "Classic Fans",
-    "Pedestal Fan",
-    "Classic Pedestal.png",
-    {
-      Size: "24 inch",
-      mm: "600",
-      Voltage: "220 V",
-      Power: "125 W",
-      Frequency: "50 Hz",
-      Speed: "1475 RPM",
-      Airflow: "4275 CFM"
-    }
-  ),
 
-  createProduct(
-    "Yunas Pedestal Fan 18",
-    "Yunas Fans",
-    "Pedestal Fan",
-    "Yunas Pedestal 18.png",
-    {
-      Size: "18 inch",
-      mm: "460",
-      Voltage: "220",
-      Power: "65",
-      Hz: "50",
-      Speed: "1475 RPM",
-      Airflow: "2473 CFM"
-    }
-  ),
-  createProduct(
-    "Yunas Pedestal Fan 24",
-    "Yunas Fans",
-    "Pedestal Fan",
-    "Yunas Pedestal 24.png",
-    {
-      Size: "24 inch",
-      mm: "600",
-      Voltage: "220 V",
-      Power: "125 W",
-      Frequency: "50 Hz",
-      Speed: "1475 RPM",
-      Airflow: "4875 CFM"
-    }
-  ),
-  createProduct(
-    "Yunas Pedestal Fan 36",
-    "Yunas Fans",
-    "Pedestal Fan",
-    "Yunas Pedestal 36.png",
-    {
-      Size: "36 inch",
-      mm: "915",
-      Voltage: "220 V",
-      Power: "750 W",
-      Frequency: "50/60 Hz",
-      Speed: "1450 RPM",
-      Airflow: "12725 CFM"
-    }
-  ),
-
-  createProduct(
-    "Belvin Circumatic Fan",
-    "Belvin Fans",
-    "Circumatic Fan",
-    "Belvin/Circumatic/Belvin Circumatic.png",
-    {
-      Size: "18 inch",
-      mm: "460",
-      Volts: "220",
-      Watts: "65",
-      Hz: "50",
-      Rpm: "1475", 
-      Cfm: "2473", 
-      Finish: "Off white" 
-    }
-  ),
-  createProduct(
-    "Belvin Circumatic Fan Black",
-    "Belvin Fans",
-    "Circumatic Fan",
-    "Belvin/Circumatic/Belvin Circumatic Black.png",
-    {
-      Size: "18 inch",
-      mm: "460",
-      Volts: "220",
-      Watts: "65",
-      Hz: "50",
-      Rpm: "1475", 
-      Cfm: "2473", 
-      Finish: "Off white" 
-    }
-  ),
-  createProduct(
-    "Belvin Pedestal Fan",
-    "Belvin Fans",
-    "Pedestal Fan",
-    "Belvin/Pedestal/Belvin Pedestal.png",
-    {
-      Size: "24 inch",
-      mm: "600",
-      Voltage: "220 V",
-      Power: "125 W",
-      Frequency: "50 Hz",
-      Speed: "1350 RPM",
-      Airflow: "6996 CFM"
-    }
-  ),
-  createProduct(
-    "Belvin Pedestal Fan Black",
-    "Belvin Fans",
-    "Pedestal Fan",
-    "Belvin/Pedestal/Belvin Pedestal Black.png",
-    {
-      Size: "24 inch",
-      mm: "600",
-      Voltage: "220 V",
-      Power: "125 W",
-      Frequency: "50 Hz",
-      Speed: "1350 RPM",
-      Airflow: "6996 CFM",
-      Finish: "Black"
-    }
-  ),
-  createProduct(
-    "Belvin Industrial Wall Fan",
-    "Belvin Fans",
-    "Wall Fan",
-    "Belvin/Wall/Belvin Wall Industrial.png",
-    {
-      Size: "24 inch",
-      mm: "600",
-      Voltage: "220 V",
-      Power: "125 W",
-      Frequency: "50 Hz",
-      Speed: "1475 RPM",
-      Airflow: "6003 CFM"
-    }
-  ),
-  createProduct(
-    "Belvin Wall Fan Black",
-    "Belvin Fans",
-    "Wall Fan",
-    "Belvin/Wall/Belvin Wall Black.png",
-    {
-      Size: "18 inch",
-      mm: "460",
-      Voltage: "220 V",
-      Power: "50 W",
-      Speed: "1475 RPM",
-      Airflow: "2473 CFM",
-      Finish: "Black"
-    }
-  ),
-  createProduct(
-    "Belvin Wall Fan Silver",
-    "Belvin Fans",
-    "Wall Fan",
-    "Belvin/Wall/Belvin Wall Silver.png",
-    {
-      Size: "18 inch",
-      Voltage: "220 V",
-      Power: "65 W",
-      Frequency: "50 Hz",
-      Speed: "1475 RPM",
-      Airflow: "2473 CFM",
-      Finish: "Silver"
-    }
-  ),
+  /* =========================
+     GFC FANS
+     ========================= */
 
   createProduct(
     "GFC Axial Blower 8, 10 and 12",
@@ -626,36 +428,54 @@ const products = [
     "VIP Old Plus"
   ),
   createProduct(
-  "GFC Circumatic Fan",
-  "GFC Fans",
-  "Circumatic Fan",
-  "GFC/Cirumatic/GFC Circumatic.png",
-  {
-    "Available Sizes": "16 and 18 inch",
-    mm: "400, 460"
-  },
-  null,
-  [
+    "GFC Circumatic Fan",
+    "GFC Fans",
+    "Circumatic Fan",
+    "GFC/Cirumatic/GFC Circumatic.png",
     {
-      size: '16"',
-      mm: "400",
-      Volts: "230",
-      Watts: "55",
-      Hz: "50",
-      Rpm: "1475",
-      Cfm: "1589"
+      "Available Sizes": "16 and 18 inch",
+      mm: "400, 460"
     },
+    null,
+    [
+      {
+        size: '16"',
+        mm: "400",
+        Volts: "230",
+        Watts: "55",
+        Hz: "50",
+        Rpm: "1475",
+        Cfm: "1589"
+      },
+      {
+        size: '18"',
+        mm: "460",
+        Volts: "230",
+        Watts: "65",
+        Hz: "50",
+        Rpm: "1475",
+        Cfm: "2473"
+      }
+    ]
+  ),
+  createProduct(
+    "GFC False Ceiling Fan",
+    "GFC Fans",
+    "False Ceiling Fan",
+    "GFC/Ceiling/False Ceiling Fan.jpeg",
     {
-      size: '18"',
-      mm: "460",
-      Volts: "230",
-      Watts: "65",
-      Hz: "50",
-      Rpm: "1475",
-      Cfm: "2473"
+      Lighting: "With or without LED"
     }
-  ]
-),
+  ),
+  createProduct(
+    "GFC PVC Flexible Duct",
+    "GFC Fans",
+    "Axial Blower",
+    "GFC/Axial Blower/Flexible Duct.jpeg",
+    {
+      "Available Sizes": "8, 10, 12, 16, 18, 20 and 24 inch"
+    }
+  ),
   createProduct(
     "GFC Air Cooler 6600",
     "GFC Fans",
@@ -667,7 +487,7 @@ const products = [
       Hz: "50/60",
       Rpm: "1400",
       Cfm: "7850",
-       "Water Tank": "65 L" 
+      "Water Tank": "65 L"
     },
     "6600"
   ),
@@ -853,7 +673,7 @@ const products = [
       Frequency: "50/60 Hz",
       Speed: "1400 RPM",
       Airflow: "4175 CFM (18 inch); 6380 CFM (24 inch); 7068 CFM (26 inch); 10000 CFM (30 inch)"
-    },
+    }
   ),
   createProduct(
     "GFC Wall Fan Myga",
@@ -886,6 +706,11 @@ const products = [
       Airflow: "1589 CFM (16 inch); 2473 CFM (18 inch)"
     }
   ),
+
+
+  /* =========================
+     GN FANS
+     ========================= */
 
   createProduct(
     "GN Drum Fan",
@@ -934,7 +759,7 @@ const products = [
   createProduct(
     "GN Inline Duct Fan",
     "GN Fans",
-    "Duct Fan",
+    "Axial Blower",
     "GN/GN Inline.png",
     {
       "Available Sizes": "4 and 6 inch",
@@ -1073,10 +898,10 @@ const products = [
   createProduct(
     "GN Duct Fan",
     "GN Fans",
-    "Duct Fan",
+    "Axial Blower",
     "GN/Axial Blower/GN Duct.png",
     {
-      "Available Sizes": "12, 16, 18, 24, 32",
+      "Available Sizes": "12, 16, 18, 24, 32"
     }
   ),
   createProduct(
@@ -1209,6 +1034,62 @@ const products = [
     }
   ),
 
+
+  /* =========================
+     YUNAS FANS
+     ========================= */
+
+  createProduct(
+    "Yunas Pedestal Fan 18",
+    "Yunas Fans",
+    "Pedestal Fan",
+    "Yunas Pedestal 18.png",
+    {
+      Size: "18 inch",
+      mm: "460",
+      Voltage: "220",
+      Power: "65",
+      Hz: "50",
+      Speed: "1475 RPM",
+      Airflow: "2473 CFM"
+    }
+  ),
+  createProduct(
+    "Yunas Pedestal Fan 24",
+    "Yunas Fans",
+    "Pedestal Fan",
+    "Yunas Pedestal 24.png",
+    {
+      Size: "24 inch",
+      mm: "600",
+      Voltage: "220 V",
+      Power: "125 W",
+      Frequency: "50 Hz",
+      Speed: "1475 RPM",
+      Airflow: "4875 CFM"
+    }
+  ),
+  createProduct(
+    "Yunas Pedestal Fan 36",
+    "Yunas Fans",
+    "Pedestal Fan",
+    "Yunas Pedestal 36.png",
+    {
+      Size: "36 inch",
+      mm: "915",
+      Voltage: "220 V",
+      Power: "750 W",
+      Frequency: "50/60 Hz",
+      Speed: "1450 RPM",
+      Airflow: "12725 CFM"
+    }
+  ),
+
+
+  /* =========================
+     KHAITAN FANS
+     ========================= */
+
   createProduct(
     "Khaitan Air Cooler Cruze-45",
     "Khaitan Fans",
@@ -1306,6 +1187,179 @@ const products = [
       Airflow: "5300 CFM (18 inch); 9540 CFM (24 inch); 13075 CFM (30 inch)"
     }
   ),
+
+
+  /* =========================
+     CLASSIC FANS
+     ========================= */
+
+  createProduct(
+    "Classic Misting Pedestal Fan",
+    "Classic Fans",
+    "Mist Fan",
+    "Classic Mist Pedestal.png",
+    {
+      "Available Sizes": "26 inch and 30 inch",
+      mm: "660, 750",
+      Voltage: "220-240 V",
+      Power: "250 W (26 inch); 300 W (30 inch)",
+      Frequency: "50/60 Hz",
+      Speed: "1400 RPM",
+      Airflow: "7800 CFM (26 inch); 9800 CFM (30 inch)",
+      "Water Tank": "41 L"
+    }
+  ),
+  createProduct(
+    "Classic Misting Wall Fan",
+    "Classic Fans",
+    "Mist Fan",
+    "Classic Mist Wall.png",
+    {
+      Size: "26 inch",
+      mm: "660",
+      Voltage: "220-240 V",
+      Power: "250 W",
+      Frequency: "50/60 Hz",
+      Speed: "1400 RPM",
+      Airflow: "7800 CFM",
+      "Water Tank": "10 L"
+    }
+  ),
+  createProduct(
+    "Classic Pedestal Fan",
+    "Classic Fans",
+    "Pedestal Fan",
+    "Classic Pedestal.png",
+    {
+      Size: "24 inch",
+      mm: "600",
+      Voltage: "220 V",
+      Power: "125 W",
+      Frequency: "50 Hz",
+      Speed: "1475 RPM",
+      Airflow: "4275 CFM"
+    }
+  ),
+
+
+  /* =========================
+     BELVIN FANS
+     ========================= */
+
+  createProduct(
+    "Belvin Circumatic Fan",
+    "Belvin Fans",
+    "Circumatic Fan",
+    "Belvin/Circumatic/Belvin Circumatic.png",
+    {
+      Size: "18 inch",
+      mm: "460",
+      Volts: "220",
+      Watts: "65",
+      Hz: "50",
+      Rpm: "1475",
+      Cfm: "2473",
+      Finish: "Off white"
+    }
+  ),
+  createProduct(
+    "Belvin Circumatic Fan Black",
+    "Belvin Fans",
+    "Circumatic Fan",
+    "Belvin/Circumatic/Belvin Circumatic Black.png",
+    {
+      Size: "18 inch",
+      mm: "460",
+      Volts: "220",
+      Watts: "65",
+      Hz: "50",
+      Rpm: "1475",
+      Cfm: "2473",
+      Finish: "Off white"
+    }
+  ),
+  createProduct(
+    "Belvin Pedestal Fan",
+    "Belvin Fans",
+    "Pedestal Fan",
+    "Belvin/Pedestal/Belvin Pedestal.png",
+    {
+      Size: "24 inch",
+      mm: "600",
+      Voltage: "220 V",
+      Power: "125 W",
+      Frequency: "50 Hz",
+      Speed: "1350 RPM",
+      Airflow: "6996 CFM"
+    }
+  ),
+  createProduct(
+    "Belvin Pedestal Fan Black",
+    "Belvin Fans",
+    "Pedestal Fan",
+    "Belvin/Pedestal/Belvin Pedestal Black.png",
+    {
+      Size: "24 inch",
+      mm: "600",
+      Voltage: "220 V",
+      Power: "125 W",
+      Frequency: "50 Hz",
+      Speed: "1350 RPM",
+      Airflow: "6996 CFM",
+      Finish: "Black"
+    }
+  ),
+  createProduct(
+    "Belvin Industrial Wall Fan",
+    "Belvin Fans",
+    "Wall Fan",
+    "Belvin/Wall/Belvin Wall Industrial.png",
+    {
+      Size: "24 inch",
+      mm: "600",
+      Voltage: "220 V",
+      Power: "125 W",
+      Frequency: "50 Hz",
+      Speed: "1475 RPM",
+      Airflow: "6003 CFM"
+    }
+  ),
+  createProduct(
+    "Belvin Wall Fan Black",
+    "Belvin Fans",
+    "Wall Fan",
+    "Belvin/Wall/Belvin Wall Black.png",
+    {
+      Size: "18 inch",
+      mm: "460",
+      Voltage: "220 V",
+      Power: "50 W",
+      Speed: "1475 RPM",
+      Airflow: "2473 CFM",
+      Finish: "Black"
+    }
+  ),
+  createProduct(
+    "Belvin Wall Fan Silver",
+    "Belvin Fans",
+    "Wall Fan",
+    "Belvin/Wall/Belvin Wall Silver.png",
+    {
+      Size: "18 inch",
+      Voltage: "220 V",
+      Power: "65 W",
+      Frequency: "50 Hz",
+      Speed: "1475 RPM",
+      Airflow: "2473 CFM",
+      Finish: "Silver"
+    }
+  ),
+
+
+  /* =========================
+     ACCESSORIES
+     ========================= */
+
   createProduct(
     "Dimmer",
     "",

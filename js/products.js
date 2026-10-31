@@ -43,6 +43,18 @@ function saveCatalogueState(scrollY = window.scrollY) {
 
 }
 
+function getUniqueSizes(product) {
+
+  const sizes =
+    (product.specifications.Size || "")
+      .match(/\d+(?:\.\d+)?/g) || [];
+
+  return [...new Set(sizes)]
+    .map(size => `${size}"`)
+    .join(", ");
+
+}
+
 
 function renderProducts(productList) {
 
@@ -92,14 +104,17 @@ function renderProducts(productList) {
           </span>
         `;
 
+        const sizeText =
+      getUniqueSizes(product);
+
     const model =
       product.isAccessory
         ? ""
-        : `
-          <p>
-            Model: ${product.model || "Not listed in catalog"}
-          </p>
-        `;
+        : product.model
+        ? `<p>Model: ${product.model}</p>`
+        : sizeText
+        ? `<p>Size: ${sizeText}</p>`
+        : "";
 
     card.innerHTML = `
       <div class="catalogue-product-image">

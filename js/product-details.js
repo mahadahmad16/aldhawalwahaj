@@ -251,14 +251,18 @@ const tableBody =
   specificationTable.createTBody();
 
 const tableRows =
-  specificationKeys.map(key => [
-    key,
-    ...(sizeVariants
-      ? sizeVariants.map(
-          variant => variant[key] || "—"
-        )
-      : [product.specifications[key] || "—"])
-  ]);
+  specificationKeys
+    .map(key => [
+      key,
+      ...(sizeVariants
+        ? sizeVariants.map(
+            variant => variant[key] || "—"
+          )
+        : [product.specifications[key] || "—"])
+    ])
+    .filter(([, ...values]) =>
+      values.some(value => value !== "—")
+    );
 
 tableRows.forEach(([key, ...values]) => {
 
