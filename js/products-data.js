@@ -1044,7 +1044,7 @@ const products = [
     "Pedestal Fan",
     "Yunas Pedestal 24.png",
     {
-      Size: "24 inch",
+      Size: "18 and 24 inch",
       mm: "600",
       Voltage: "220 V",
       Power: "125 W",
