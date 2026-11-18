@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
       allLabel: "View all brands",
       queryKey: "brand",
       groups: [
-        { title: "Fan & ventilation brands", links: ["Belvin Fans", "Classic Fans", "GFC Fans", "GN Fans", "Khaitan Fans", "Yunas Fans"] }
+        { title: "Fan & ventilation brands", links: ["Classic Fans", "GFC Fans", "GN Fans", "Khaitan Fans", "Yunas Fans"] }
       ]
     }
   };
