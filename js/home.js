@@ -1,7 +1,6 @@
 (function () {
   const container = document.querySelector(".home-hero-slides");
   const allSlides = Array.from(document.querySelectorAll(".home-hero-slide"));
-  const hero = document.querySelector(".home-hero");
 
   if (!container || allSlides.length < 2) return;
 
@@ -24,7 +23,7 @@
     clearTimeout(resetTimeout);
     animating = false;
 
-    // Filter out hidden slides (like the desktop-only third banner on mobile)
+    // Keep the carousel in sync with any slides hidden at this breakpoint.
     slides = allSlides.filter(
       (slide) => getComputedStyle(slide).display !== "none"
     );
@@ -129,9 +128,6 @@
   function stop() {
     clearInterval(timer);
   }
-
-  hero?.addEventListener("mouseenter", stop);
-  hero?.addEventListener("mouseleave", start);
 
   document.addEventListener("visibilitychange", function () {
     if (document.hidden) stop();

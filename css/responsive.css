@@ -500,11 +500,6 @@
     background: #fff;
   }
 
-  /* Hide the third slide (desktop-only) on mobile */
-  .desktop-only { 
-    display: none !important; 
-  }
-
   /* Mobile slides fade instead of sliding so the container 
      height adapts to the mobile image's natural height */
   .home-hero-slide {
