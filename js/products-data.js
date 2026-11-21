@@ -758,7 +758,7 @@ const products = [
   createProduct(
     "GN Inline Duct Fan",
     "GN Fans",
-    "Axial Blower",
+    "Exhaust Fan",
     "GN/GN Inline.png",
     {
       "Available Sizes": "4 and 6 inch",
